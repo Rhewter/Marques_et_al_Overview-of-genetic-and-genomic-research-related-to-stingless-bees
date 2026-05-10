@@ -93,9 +93,6 @@ The manuscript used AI-assisted screening and taxon-classification steps, follow
 
 The final analysis script does not rerun the OpenAI API classification by default because it requires an API key and may change with model/provider updates. Scripts for those provenance steps are retained in `scripts/` for transparency, but the manuscript analyses should be reproduced from the audited classification files included here.
 
-## Files Intentionally Not Included
-
-This repository was curated from a larger working repository. Exploratory analyses, superseded STM runs, tests, temporary files, working drafts, and intermediate outputs not used in the final manuscript were intentionally excluded to keep the public repository focused on reviewer access and scientific reproducibility.
 
 ## License
 
