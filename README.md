@@ -2,7 +2,7 @@
 
 This repository contains the curated data, scripts, and final outputs used in the manuscript:
 
-**Overview of genetic and genomic research related to stingless bees (Meliponini): an AI-assisted science mapping and structural topic modeling analysis**
+**Overview of genetic and genomic research related to stingless bees (Meliponini): an AI-assisted science mapping and structural topic modeling analysis** (munuscript under review)
 
 The study is a systematic evidence map and bibliometric synthesis of genetic and genomic research on stingless bees. The final corpus combines Scopus and Web of Science records, retains 410 peer-reviewed articles published between 1950 and April 2026, and uses structural topic modelling (STM) to describe thematic, temporal, taxonomic, biogeographic, and subtribal patterns in the literature.
 
