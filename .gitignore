@@ -15,3 +15,7 @@
 # Temporary exploratory outputs generated outside the final workflow
 tmp/
 scratch/
+
+# Submission documents not intended for the public repository
+cover_letter_mdpi_dna.md
+cover_letter_mdpi_dna.docx
