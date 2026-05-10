@@ -6,6 +6,10 @@ This repository contains the curated data, scripts, and final outputs used in th
 
 The study is a systematic evidence map and bibliometric synthesis of genetic and genomic research on stingless bees. The final corpus combines Scopus and Web of Science records, retains 410 peer-reviewed articles published between 1950 and April 2026, and uses structural topic modelling (STM) to describe thematic, temporal, taxonomic, biogeographic, and subtribal patterns in the literature.
 
+## Authors
+
+Larissa de Oliveira Rosa Marques; Jamira Dias Rocha; Leonardo Carlos Jeronimo Corvalan; Jullia Costa dos Reis; Cintia Pelegrineti Targueta; Pedro Vale de Azevedo Brito; Carlos de Melo e Silva Neto; Thiago Mafra Batista; Mariana Pires de Campos Telles; Renata de Oliveira Dias; Rhewter Nunes.
+
 ## Repository Organization
 
 ```text
@@ -96,3 +100,7 @@ This repository was curated from a larger working repository. Exploratory analys
 ## License
 
 The repository is distributed under the license specified in `LICENSE`.
+
+## Disclaimer
+
+The scripts, data-processing workflow, and derived outputs in this repository are provided for transparency and scientific reproducibility. They are distributed as is, without warranties of correctness, fitness for a particular purpose, or continued maintenance. The authors are not responsible for errors, omissions, or consequences arising from the use, modification, or redistribution of these materials. Users are responsible for independently validating the outputs for their own purposes.
