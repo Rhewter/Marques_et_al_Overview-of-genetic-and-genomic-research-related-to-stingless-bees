@@ -21,7 +21,6 @@ The study is a systematic evidence map and bibliometric synthesis of genetic and
 |-- results/
 |   |-- article_final_merged_scopus_wos_articles_only/
 |   `-- phylo_genus_merged_scopus_wos_articles_only/
-|-- reports/
 |-- scripts/
 |-- Meliponini_genus_list.xlsx
 |-- LICENSE
@@ -43,7 +42,6 @@ The study is a systematic evidence map and bibliometric synthesis of genetic and
 - `results/article_final_merged_scopus_wos_articles_only/stm_region_k10/`: STM run with biogeographic region as the prevalence covariate.
 - `results/article_final_merged_scopus_wos_articles_only/stm_subtribe_k10/`: STM run with subtribe as the prevalence covariate.
 - `results/phylo_genus_merged_scopus_wos_articles_only/`: genus-level phylogenetic tree, audit tables, and heatmap files.
-- `reports/relatorio_final_artigo_meliponini.md`: internal final analysis report summarizing the workflow and outputs.
 
 ## Reproducing the Final Analysis
 
@@ -93,7 +91,7 @@ The final analysis script does not rerun the OpenAI API classification by defaul
 
 ## Files Intentionally Not Included
 
-This repository was curated from a larger working repository. Exploratory analyses, superseded STM runs, tests, temporary files, draft reports, and intermediate outputs not used in the final manuscript were intentionally excluded to keep the public repository focused on reviewer access and scientific reproducibility.
+This repository was curated from a larger working repository. Exploratory analyses, superseded STM runs, tests, temporary files, working drafts, and intermediate outputs not used in the final manuscript were intentionally excluded to keep the public repository focused on reviewer access and scientific reproducibility.
 
 ## License
 
