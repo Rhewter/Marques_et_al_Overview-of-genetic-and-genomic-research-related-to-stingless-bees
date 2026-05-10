@@ -1,0 +1,79 @@
+"edge_id","parent","child","descendant_genera","edge_count_mean","edge_mapped_value_mean","edge_color","basal_compression"
+1,41,42,"Ptilotrigona; Tetragona; Cephalotrigona; Geotrigona; Trigona; Oxytrigona; Meliwillea; Scaptotrigona; Duckeola; Trichotrigona; Tetragonisca; Scaura; Friesella; Lestrimelitta; Mourella; Schwarziana; Nannotrigona; Nogueirapis; Partamona; Paratrigona; Paratrigonoides; Melipona; Trigonisca",16.1739130434783,1.60433570846083,"#00D7B6",1.8
+2,42,43,"Ptilotrigona; Tetragona; Cephalotrigona; Geotrigona; Trigona; Oxytrigona; Meliwillea; Scaptotrigona; Duckeola; Trichotrigona; Tetragonisca; Scaura; Friesella; Lestrimelitta; Mourella; Schwarziana; Nannotrigona; Nogueirapis; Partamona; Paratrigona; Paratrigonoides; Melipona",16.8181818181818,1.62732313663323,"#00D8B3",1.8
+3,43,44,"Ptilotrigona; Tetragona; Cephalotrigona; Geotrigona; Trigona; Oxytrigona; Meliwillea; Scaptotrigona; Duckeola; Trichotrigona; Tetragonisca; Scaura; Friesella; Lestrimelitta; Mourella; Schwarziana; Nannotrigona; Nogueirapis; Partamona; Paratrigona; Paratrigonoides",9.14285714285714,1.45779634286144,"#00D3C9",1.8
+4,44,45,"Ptilotrigona; Tetragona; Cephalotrigona; Geotrigona; Trigona; Oxytrigona; Meliwillea; Scaptotrigona; Duckeola; Trichotrigona; Tetragonisca; Scaura; Friesella; Lestrimelitta; Mourella; Schwarziana; Nannotrigona",8.8235294117647,1.50081510425095,"#00D4C3",1.8
+5,45,46,"Ptilotrigona; Tetragona; Cephalotrigona; Geotrigona; Trigona; Oxytrigona; Meliwillea; Scaptotrigona; Duckeola; Trichotrigona; Tetragonisca; Scaura",11,1.54409503767899,"#00D6BE",1.8
+6,46,47,"Ptilotrigona; Tetragona; Cephalotrigona; Geotrigona; Trigona; Oxytrigona; Meliwillea; Scaptotrigona",10.625,1.61633981164369,"#00D8B3",1.8
+7,47,48,"Ptilotrigona; Tetragona; Cephalotrigona; Geotrigona; Trigona; Oxytrigona",7.16666666666667,1.52825306290932,"#00D6BE",1.8
+8,48,49,"Ptilotrigona; Tetragona; Cephalotrigona; Geotrigona; Trigona",8.2,1.61418121775756,"#00D8B3",1.8
+9,49,50,"Ptilotrigona; Tetragona; Cephalotrigona; Geotrigona",2.5,1.15129254649702,"#00CAF1",1.8
+10,50,51,"Ptilotrigona; Tetragona; Cephalotrigona",3,1.30400766847605,"#00CFDC",1.8
+11,51,52,"Ptilotrigona; Tetragona",2.5,1.15129254649702,"#00CAF1",1.8
+12,52,1,"Ptilotrigona",1,0.693147180559945,"#1096FF",1.8
+13,52,2,"Tetragona",4,1.6094379124341,"#00D8B3",1.8
+14,51,3,"Cephalotrigona",4,1.6094379124341,"#00D8B3",1.8
+15,50,4,"Geotrigona",1,0.693147180559945,"#1096FF",1.8
+16,49,5,"Trigona",31,3.46573590279973,"#FFC400",1.8
+17,48,6,"Oxytrigona",2,1.09861228866811,"#00C9F6",1.8
+18,47,53,"Meliwillea; Scaptotrigona",21,1.88060005784678,"#00E090",1.8
+19,53,7,"Meliwillea",0,0,"#3132FF",1.8
+20,53,8,"Scaptotrigona",42,3.76120011569356,"#FFA000",1.8
+21,46,54,"Duckeola; Trichotrigona; Tetragonisca; Scaura",11.75,1.39960548974959,"#00D2D1",1.8
+22,54,55,"Duckeola; Trichotrigona; Tetragonisca",15,1.49993655677675,"#00D4C3",1.8
+23,55,56,"Duckeola; Trichotrigona",0.5,0.346573590279973,"#2064FF",1.8
+24,56,9,"Duckeola",0,0,"#3132FF",1.8
+25,56,10,"Trichotrigona",1,0.693147180559945,"#1096FF",1.8
+26,55,11,"Tetragonisca",44,3.80666248977032,"#FF9800",1.8
+27,54,12,"Scaura",2,1.09861228866811,"#00C9F6",1.8
+28,45,57,"Friesella; Lestrimelitta; Mourella; Schwarziana; Nannotrigona",3.6,1.39694326402365,"#00D2D1",1.8
+29,57,58,"Friesella; Lestrimelitta",3,1.3540251005511,"#00D0D6",1.8
+30,58,13,"Friesella",2,1.09861228866811,"#00C9F6",1.8
+31,58,14,"Lestrimelitta",4,1.6094379124341,"#00D8B3",1.8
+32,57,59,"Mourella; Schwarziana; Nannotrigona",4,1.42555537300535,"#00D3CB",1.8
+33,59,60,"Mourella; Schwarziana",2,1.03972077083992,"#00C8FF",1.8
+34,60,15,"Mourella",1,0.693147180559945,"#1096FF",1.8
+35,60,16,"Schwarziana",3,1.38629436111989,"#00D2D1",1.8
+36,59,17,"Nannotrigona",8,2.19722457733622,"#1DE768",1.8
+37,44,61,"Nogueirapis; Partamona; Paratrigona; Paratrigonoides",10.5,1.27496660695605,"#00CEE1",1.8
+38,61,62,"Nogueirapis; Partamona",20,1.85678603335215,"#00DF93",1.8
+39,62,18,"Nogueirapis",0,0,"#3132FF",1.8
+40,62,19,"Partamona",40,3.71357206670431,"#FFA500",1.8
+41,61,63,"Paratrigona; Paratrigonoides",1,0.693147180559945,"#1096FF",1.8
+42,63,20,"Paratrigona",1,0.693147180559945,"#1096FF",1.8
+43,63,21,"Paratrigonoides",1,0.693147180559945,"#1096FF",1.8
+44,43,22,"Melipona",178,5.18738580584075,"#E60000",1.8
+45,42,23,"Trigonisca",2,1.09861228866811,"#00C9F6",1.8
+46,41,64,"Axestotrigona; Meliplebeia; Plebeina; Dactylurina; Meliponula; Plebeiella; Austroplebeia; Lisotrigona; Ebaiotrigona; Liotrigona; Hypotrigona; Heterotrigona; Wallacetrigona; Homotrigona; Papuatrigona; Pariotrigona; Tetragonula",6.52941176470588,1.36847153627204,"#00D1D4",1.8
+47,64,65,"Axestotrigona; Meliplebeia; Plebeina; Dactylurina; Meliponula; Plebeiella; Austroplebeia; Lisotrigona; Ebaiotrigona; Liotrigona; Hypotrigona",2.54545454545455,1.10078911813832,"#00C9F6",1.8
+48,65,66,"Axestotrigona; Meliplebeia; Plebeina; Dactylurina; Meliponula; Plebeiella; Austroplebeia; Lisotrigona; Ebaiotrigona; Liotrigona",2.2,1.01627701504662,"#01C2FF",1.8
+49,66,67,"Axestotrigona; Meliplebeia; Plebeina; Dactylurina; Meliponula; Plebeiella",2.33333333333333,1.09654186866835,"#00C9F9",1.8
+50,67,68,"Axestotrigona; Meliplebeia; Plebeina",2.33333333333333,1.1945063128187,"#00CCEC",1.8
+51,68,69,"Axestotrigona; Meliplebeia",2,1.09861228866811,"#00C9F6",1.8
+52,69,24,"Axestotrigona",2,1.09861228866811,"#00C9F6",1.8
+53,69,25,"Meliplebeia",2,1.09861228866811,"#00C9F6",1.8
+54,68,26,"Plebeina",3,1.38629436111989,"#00D2D1",1.8
+55,67,70,"Dactylurina; Meliponula; Plebeiella",2.33333333333333,0.998577424517997,"#01C2FF",1.8
+56,70,71,"Dactylurina; Meliponula",3.5,1.497866136777,"#00D4C3",1.8
+57,71,27,"Dactylurina",3,1.38629436111989,"#00D2D1",1.8
+58,71,28,"Meliponula",4,1.6094379124341,"#00D8B3",1.8
+59,70,29,"Plebeiella",0,0,"#3132FF",1.8
+60,66,72,"Austroplebeia; Lisotrigona; Ebaiotrigona; Liotrigona",2,0.895879734614027,"#06B3FF",1.8
+61,72,73,"Austroplebeia; Lisotrigona; Ebaiotrigona",2,0.828302216596,"#0AA7FF",1.8
+62,73,74,"Austroplebeia; Lisotrigona",2.5,0.895879734614027,"#06B3FF",1.8
+63,74,30,"Austroplebeia",5,1.79175946922805,"#00DD9B",1.8
+64,74,31,"Lisotrigona",0,0,"#3132FF",1.8
+65,73,32,"Ebaiotrigona",1,0.693147180559945,"#1096FF",1.8
+66,72,33,"Liotrigona",2,1.09861228866811,"#00C9F6",1.8
+67,65,34,"Hypotrigona",6,1.94591014905531,"#00E188",1.8
+68,64,75,"Heterotrigona; Wallacetrigona; Homotrigona; Papuatrigona; Pariotrigona; Tetragonula",13.8333333333333,1.85922263618385,"#00DF93",1.8
+69,75,76,"Heterotrigona; Wallacetrigona; Homotrigona",11.6666666666667,1.97296461809105,"#00E286",1.8
+70,76,77,"Heterotrigona; Wallacetrigona",16.5,2.41014078280252,"#4FE950",1.8
+71,77,35,"Heterotrigona",30,3.43398720448515,"#FFC900",1.8
+72,77,36,"Wallacetrigona",3,1.38629436111989,"#00D2D1",1.8
+73,76,37,"Homotrigona",2,1.09861228866811,"#00C9F6",1.8
+74,75,78,"Papuatrigona; Pariotrigona; Tetragonula",16,1.74548065427665,"#00DCA3",1.8
+75,78,79,"Papuatrigona; Pariotrigona",1,0.693147180559945,"#1096FF",1.8
+76,79,38,"Papuatrigona",1,0.693147180559945,"#1096FF",1.8
+77,79,39,"Pariotrigona",1,0.693147180559945,"#1096FF",1.8
+78,78,40,"Tetragonula",46,3.85014760171006,"#FF9300",1.8

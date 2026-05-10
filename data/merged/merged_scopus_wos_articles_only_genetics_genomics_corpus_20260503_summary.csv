@@ -1,0 +1,8 @@
+metric,value
+scopus_records,383
+wos_confirmed_relevant_records_before_non_article_exclusion,31
+wos_excluded_non_article_records,4
+wos_confirmed_relevant_article_records,27
+merged_records_before_final_dedup,410
+duplicates_removed_after_merge,0
+merged_records_final,410

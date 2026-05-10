@@ -1,0 +1,2 @@
+K,exclus,semcoh,heldout,residual,bound,lbound,em.its,score_semcoh,score_exclusivity,score_heldout,score_residual,score_bound,composite_score,composite_rank,selected_for_final_model,selected_by_composite_score
+10,9.410298307520835,-65.11638544631974,-6.499611348017136,1.444258772111722,-234113.0607535265,-234097.95634095342,84,0.5,0.5,0.5,0.5,0.5,0.5,1,TRUE,TRUE

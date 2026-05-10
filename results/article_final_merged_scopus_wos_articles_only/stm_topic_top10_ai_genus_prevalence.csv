@@ -1,0 +1,101 @@
+genus,topic,article_label,short_label_article,compact_label,broader_theme,mean_prevalence,n_articles,n_articles_ai_studied_genus_combined
+Melipona,1,"Phylogenomics, taxonomy and evolutionary relationships",Phylogenomics/taxonomy,T1. Phylogenomics/taxonomy,Evolutionary relationships and taxonomy,0.058465191805927255,178,178
+Melipona,2,Symbiotic bacteria and probiotics,Symbiotic bacteria/probiotics,T2. Symbiotic bacteria/probiotics,Microbiome and symbiosis,0.05156307793575192,178,178
+Melipona,3,"Viral pathogens, floral resources and metabarcoding",Pathogens/metabarcoding,T3. Pathogens/metabarcoding,Disease ecology and environmental DNA,0.08601614740113868,178,178
+Melipona,4,Mitogenomics and mitochondrial genome evolution,Mitogenomics,T4. Mitogenomics,Genome architecture and comparative genomics,0.07215537282065525,178,178
+Melipona,5,"Cytogenetics, karyotypes and chromosome architecture",Cytogenetics/karyotypes,T5. Cytogenetics/karyotypes,Cytogenetics and cytogenomics,0.11805384215069499,178,178
+Melipona,6,mtDNA/COI marker assays and DNA barcoding,mtDNA/COI markers,T6. mtDNA/COI markers,"Marker assays, barcoding and molecular identification",0.10969127901427975,178,178
+Melipona,7,"Population genetics, microsatellites and morphometrics",Population genetics,T7. Population genetics,Population structure and phenotypic differentiation,0.16390025824186544,178,178
+Melipona,8,"Gene expression, caste differentiation and reproductive genetics",Expression/caste,T8. Expression/caste,Functional and reproductive genomics,0.17445784307927964,178,178
+Melipona,9,"Gut microbiome, detoxification and exposure responses",Microbiome/exposure,T9. Microbiome/exposure,Microbiome and environmental stress,0.08483713464183164,178,178
+Melipona,10,"Allozyme, RAPD and enzyme polymorphism markers",Allozyme/RAPD markers,T10. Allozyme/RAPD markers,Classical marker-based genetics,0.08085985290857554,178,178
+Tetragonula,1,"Phylogenomics, taxonomy and evolutionary relationships",Phylogenomics/taxonomy,T1. Phylogenomics/taxonomy,Evolutionary relationships and taxonomy,0.08039079110937303,46,46
+Tetragonula,2,Symbiotic bacteria and probiotics,Symbiotic bacteria/probiotics,T2. Symbiotic bacteria/probiotics,Microbiome and symbiosis,0.10526862723158777,46,46
+Tetragonula,3,"Viral pathogens, floral resources and metabarcoding",Pathogens/metabarcoding,T3. Pathogens/metabarcoding,Disease ecology and environmental DNA,0.04441124859339152,46,46
+Tetragonula,4,Mitogenomics and mitochondrial genome evolution,Mitogenomics,T4. Mitogenomics,Genome architecture and comparative genomics,0.18698719685880813,46,46
+Tetragonula,5,"Cytogenetics, karyotypes and chromosome architecture",Cytogenetics/karyotypes,T5. Cytogenetics/karyotypes,Cytogenetics and cytogenomics,0.0026643761653775975,46,46
+Tetragonula,6,mtDNA/COI marker assays and DNA barcoding,mtDNA/COI markers,T6. mtDNA/COI markers,"Marker assays, barcoding and molecular identification",0.25268352898344637,46,46
+Tetragonula,7,"Population genetics, microsatellites and morphometrics",Population genetics,T7. Population genetics,Population structure and phenotypic differentiation,0.10304051109780522,46,46
+Tetragonula,8,"Gene expression, caste differentiation and reproductive genetics",Expression/caste,T8. Expression/caste,Functional and reproductive genomics,0.04812306587429906,46,46
+Tetragonula,9,"Gut microbiome, detoxification and exposure responses",Microbiome/exposure,T9. Microbiome/exposure,Microbiome and environmental stress,0.1392853937847104,46,46
+Tetragonula,10,"Allozyme, RAPD and enzyme polymorphism markers",Allozyme/RAPD markers,T10. Allozyme/RAPD markers,Classical marker-based genetics,0.03714526030120083,46,46
+Tetragonisca,1,"Phylogenomics, taxonomy and evolutionary relationships",Phylogenomics/taxonomy,T1. Phylogenomics/taxonomy,Evolutionary relationships and taxonomy,0.05540682650088557,44,44
+Tetragonisca,2,Symbiotic bacteria and probiotics,Symbiotic bacteria/probiotics,T2. Symbiotic bacteria/probiotics,Microbiome and symbiosis,0.0849076857058531,44,44
+Tetragonisca,3,"Viral pathogens, floral resources and metabarcoding",Pathogens/metabarcoding,T3. Pathogens/metabarcoding,Disease ecology and environmental DNA,0.10701809619198609,44,44
+Tetragonisca,4,Mitogenomics and mitochondrial genome evolution,Mitogenomics,T4. Mitogenomics,Genome architecture and comparative genomics,0.057639371600272236,44,44
+Tetragonisca,5,"Cytogenetics, karyotypes and chromosome architecture",Cytogenetics/karyotypes,T5. Cytogenetics/karyotypes,Cytogenetics and cytogenomics,0.13107245184092195,44,44
+Tetragonisca,6,mtDNA/COI marker assays and DNA barcoding,mtDNA/COI markers,T6. mtDNA/COI markers,"Marker assays, barcoding and molecular identification",0.10859637090250313,44,44
+Tetragonisca,7,"Population genetics, microsatellites and morphometrics",Population genetics,T7. Population genetics,Population structure and phenotypic differentiation,0.16379725854623442,44,44
+Tetragonisca,8,"Gene expression, caste differentiation and reproductive genetics",Expression/caste,T8. Expression/caste,Functional and reproductive genomics,0.09195405445921796,44,44
+Tetragonisca,9,"Gut microbiome, detoxification and exposure responses",Microbiome/exposure,T9. Microbiome/exposure,Microbiome and environmental stress,0.06663124073030444,44,44
+Tetragonisca,10,"Allozyme, RAPD and enzyme polymorphism markers",Allozyme/RAPD markers,T10. Allozyme/RAPD markers,Classical marker-based genetics,0.13297664352182112,44,44
+Scaptotrigona,1,"Phylogenomics, taxonomy and evolutionary relationships",Phylogenomics/taxonomy,T1. Phylogenomics/taxonomy,Evolutionary relationships and taxonomy,0.0960831651400037,42,42
+Scaptotrigona,2,Symbiotic bacteria and probiotics,Symbiotic bacteria/probiotics,T2. Symbiotic bacteria/probiotics,Microbiome and symbiosis,0.10567803245720211,42,42
+Scaptotrigona,3,"Viral pathogens, floral resources and metabarcoding",Pathogens/metabarcoding,T3. Pathogens/metabarcoding,Disease ecology and environmental DNA,0.1470460326156902,42,42
+Scaptotrigona,4,Mitogenomics and mitochondrial genome evolution,Mitogenomics,T4. Mitogenomics,Genome architecture and comparative genomics,0.022586111999375547,42,42
+Scaptotrigona,5,"Cytogenetics, karyotypes and chromosome architecture",Cytogenetics/karyotypes,T5. Cytogenetics/karyotypes,Cytogenetics and cytogenomics,0.04919998175540753,42,42
+Scaptotrigona,6,mtDNA/COI marker assays and DNA barcoding,mtDNA/COI markers,T6. mtDNA/COI markers,"Marker assays, barcoding and molecular identification",0.06801034450580827,42,42
+Scaptotrigona,7,"Population genetics, microsatellites and morphometrics",Population genetics,T7. Population genetics,Population structure and phenotypic differentiation,0.22571053340631175,42,42
+Scaptotrigona,8,"Gene expression, caste differentiation and reproductive genetics",Expression/caste,T8. Expression/caste,Functional and reproductive genomics,0.17554595182793223,42,42
+Scaptotrigona,9,"Gut microbiome, detoxification and exposure responses",Microbiome/exposure,T9. Microbiome/exposure,Microbiome and environmental stress,0.0218461370833521,42,42
+Scaptotrigona,10,"Allozyme, RAPD and enzyme polymorphism markers",Allozyme/RAPD markers,T10. Allozyme/RAPD markers,Classical marker-based genetics,0.08829370920891648,42,42
+Partamona,1,"Phylogenomics, taxonomy and evolutionary relationships",Phylogenomics/taxonomy,T1. Phylogenomics/taxonomy,Evolutionary relationships and taxonomy,0.06212177899142907,40,40
+Partamona,2,Symbiotic bacteria and probiotics,Symbiotic bacteria/probiotics,T2. Symbiotic bacteria/probiotics,Microbiome and symbiosis,0.025826789397948236,40,40
+Partamona,3,"Viral pathogens, floral resources and metabarcoding",Pathogens/metabarcoding,T3. Pathogens/metabarcoding,Disease ecology and environmental DNA,0.050665474864387626,40,40
+Partamona,4,Mitogenomics and mitochondrial genome evolution,Mitogenomics,T4. Mitogenomics,Genome architecture and comparative genomics,0.006251339734048764,40,40
+Partamona,5,"Cytogenetics, karyotypes and chromosome architecture",Cytogenetics/karyotypes,T5. Cytogenetics/karyotypes,Cytogenetics and cytogenomics,0.3268555232777989,40,40
+Partamona,6,mtDNA/COI marker assays and DNA barcoding,mtDNA/COI markers,T6. mtDNA/COI markers,"Marker assays, barcoding and molecular identification",0.07395799147435984,40,40
+Partamona,7,"Population genetics, microsatellites and morphometrics",Population genetics,T7. Population genetics,Population structure and phenotypic differentiation,0.2577213328355097,40,40
+Partamona,8,"Gene expression, caste differentiation and reproductive genetics",Expression/caste,T8. Expression/caste,Functional and reproductive genomics,0.009807852511750497,40,40
+Partamona,9,"Gut microbiome, detoxification and exposure responses",Microbiome/exposure,T9. Microbiome/exposure,Microbiome and environmental stress,0.05809009615489895,40,40
+Partamona,10,"Allozyme, RAPD and enzyme polymorphism markers",Allozyme/RAPD markers,T10. Allozyme/RAPD markers,Classical marker-based genetics,0.12870182075786843,40,40
+Trigona,1,"Phylogenomics, taxonomy and evolutionary relationships",Phylogenomics/taxonomy,T1. Phylogenomics/taxonomy,Evolutionary relationships and taxonomy,0.12455204131487335,31,31
+Trigona,2,Symbiotic bacteria and probiotics,Symbiotic bacteria/probiotics,T2. Symbiotic bacteria/probiotics,Microbiome and symbiosis,0.0642037128899049,31,31
+Trigona,3,"Viral pathogens, floral resources and metabarcoding",Pathogens/metabarcoding,T3. Pathogens/metabarcoding,Disease ecology and environmental DNA,0.12708217608454703,31,31
+Trigona,4,Mitogenomics and mitochondrial genome evolution,Mitogenomics,T4. Mitogenomics,Genome architecture and comparative genomics,0.011658198521527151,31,31
+Trigona,5,"Cytogenetics, karyotypes and chromosome architecture",Cytogenetics/karyotypes,T5. Cytogenetics/karyotypes,Cytogenetics and cytogenomics,0.1673348451676355,31,31
+Trigona,6,mtDNA/COI marker assays and DNA barcoding,mtDNA/COI markers,T6. mtDNA/COI markers,"Marker assays, barcoding and molecular identification",0.13660136285795596,31,31
+Trigona,7,"Population genetics, microsatellites and morphometrics",Population genetics,T7. Population genetics,Population structure and phenotypic differentiation,0.14573252709924503,31,31
+Trigona,8,"Gene expression, caste differentiation and reproductive genetics",Expression/caste,T8. Expression/caste,Functional and reproductive genomics,0.01839930711468304,31,31
+Trigona,9,"Gut microbiome, detoxification and exposure responses",Microbiome/exposure,T9. Microbiome/exposure,Microbiome and environmental stress,0.025629428527724665,31,31
+Trigona,10,"Allozyme, RAPD and enzyme polymorphism markers",Allozyme/RAPD markers,T10. Allozyme/RAPD markers,Classical marker-based genetics,0.17880640042190332,31,31
+Heterotrigona,1,"Phylogenomics, taxonomy and evolutionary relationships",Phylogenomics/taxonomy,T1. Phylogenomics/taxonomy,Evolutionary relationships and taxonomy,0.07703008461523858,30,30
+Heterotrigona,2,Symbiotic bacteria and probiotics,Symbiotic bacteria/probiotics,T2. Symbiotic bacteria/probiotics,Microbiome and symbiosis,0.32049109099420964,30,30
+Heterotrigona,3,"Viral pathogens, floral resources and metabarcoding",Pathogens/metabarcoding,T3. Pathogens/metabarcoding,Disease ecology and environmental DNA,0.1256129254640516,30,30
+Heterotrigona,4,Mitogenomics and mitochondrial genome evolution,Mitogenomics,T4. Mitogenomics,Genome architecture and comparative genomics,0.14668537534697856,30,30
+Heterotrigona,5,"Cytogenetics, karyotypes and chromosome architecture",Cytogenetics/karyotypes,T5. Cytogenetics/karyotypes,Cytogenetics and cytogenomics,0.005410177479098043,30,30
+Heterotrigona,6,mtDNA/COI marker assays and DNA barcoding,mtDNA/COI markers,T6. mtDNA/COI markers,"Marker assays, barcoding and molecular identification",0.18601114290032125,30,30
+Heterotrigona,7,"Population genetics, microsatellites and morphometrics",Population genetics,T7. Population genetics,Population structure and phenotypic differentiation,0.06742879294573537,30,30
+Heterotrigona,8,"Gene expression, caste differentiation and reproductive genetics",Expression/caste,T8. Expression/caste,Functional and reproductive genomics,0.024568063149748923,30,30
+Heterotrigona,9,"Gut microbiome, detoxification and exposure responses",Microbiome/exposure,T9. Microbiome/exposure,Microbiome and environmental stress,0.026025527869898868,30,30
+Heterotrigona,10,"Allozyme, RAPD and enzyme polymorphism markers",Allozyme/RAPD markers,T10. Allozyme/RAPD markers,Classical marker-based genetics,0.02073681923471917,30,30
+Frieseomelitta,1,"Phylogenomics, taxonomy and evolutionary relationships",Phylogenomics/taxonomy,T1. Phylogenomics/taxonomy,Evolutionary relationships and taxonomy,0.1303626407010506,20,20
+Frieseomelitta,2,Symbiotic bacteria and probiotics,Symbiotic bacteria/probiotics,T2. Symbiotic bacteria/probiotics,Microbiome and symbiosis,0.03888415285309964,20,20
+Frieseomelitta,3,"Viral pathogens, floral resources and metabarcoding",Pathogens/metabarcoding,T3. Pathogens/metabarcoding,Disease ecology and environmental DNA,0.029635632315682774,20,20
+Frieseomelitta,4,Mitogenomics and mitochondrial genome evolution,Mitogenomics,T4. Mitogenomics,Genome architecture and comparative genomics,0.09352186870081736,20,20
+Frieseomelitta,5,"Cytogenetics, karyotypes and chromosome architecture",Cytogenetics/karyotypes,T5. Cytogenetics/karyotypes,Cytogenetics and cytogenomics,0.1700038857381515,20,20
+Frieseomelitta,6,mtDNA/COI marker assays and DNA barcoding,mtDNA/COI markers,T6. mtDNA/COI markers,"Marker assays, barcoding and molecular identification",0.014994279257725205,20,20
+Frieseomelitta,7,"Population genetics, microsatellites and morphometrics",Population genetics,T7. Population genetics,Population structure and phenotypic differentiation,0.08642165120712149,20,20
+Frieseomelitta,8,"Gene expression, caste differentiation and reproductive genetics",Expression/caste,T8. Expression/caste,Functional and reproductive genomics,0.2609133901569387,20,20
+Frieseomelitta,9,"Gut microbiome, detoxification and exposure responses",Microbiome/exposure,T9. Microbiome/exposure,Microbiome and environmental stress,0.16448791510868005,20,20
+Frieseomelitta,10,"Allozyme, RAPD and enzyme polymorphism markers",Allozyme/RAPD markers,T10. Allozyme/RAPD markers,Classical marker-based genetics,0.010774583960732609,20,20
+Plebeia,1,"Phylogenomics, taxonomy and evolutionary relationships",Phylogenomics/taxonomy,T1. Phylogenomics/taxonomy,Evolutionary relationships and taxonomy,0.0743435352173672,19,19
+Plebeia,2,Symbiotic bacteria and probiotics,Symbiotic bacteria/probiotics,T2. Symbiotic bacteria/probiotics,Microbiome and symbiosis,0.0660127362700425,19,19
+Plebeia,3,"Viral pathogens, floral resources and metabarcoding",Pathogens/metabarcoding,T3. Pathogens/metabarcoding,Disease ecology and environmental DNA,0.09186257614137835,19,19
+Plebeia,4,Mitogenomics and mitochondrial genome evolution,Mitogenomics,T4. Mitogenomics,Genome architecture and comparative genomics,0.009116926804413658,19,19
+Plebeia,5,"Cytogenetics, karyotypes and chromosome architecture",Cytogenetics/karyotypes,T5. Cytogenetics/karyotypes,Cytogenetics and cytogenomics,0.11037086657741894,19,19
+Plebeia,6,mtDNA/COI marker assays and DNA barcoding,mtDNA/COI markers,T6. mtDNA/COI markers,"Marker assays, barcoding and molecular identification",0.0817896385501377,19,19
+Plebeia,7,"Population genetics, microsatellites and morphometrics",Population genetics,T7. Population genetics,Population structure and phenotypic differentiation,0.2375305268676282,19,19
+Plebeia,8,"Gene expression, caste differentiation and reproductive genetics",Expression/caste,T8. Expression/caste,Functional and reproductive genomics,0.006473869166996524,19,19
+Plebeia,9,"Gut microbiome, detoxification and exposure responses",Microbiome/exposure,T9. Microbiome/exposure,Microbiome and environmental stress,0.01968811699248504,19,19
+Plebeia,10,"Allozyme, RAPD and enzyme polymorphism markers",Allozyme/RAPD markers,T10. Allozyme/RAPD markers,Classical marker-based genetics,0.3028112074121318,19,19
+Lepidotrigona,1,"Phylogenomics, taxonomy and evolutionary relationships",Phylogenomics/taxonomy,T1. Phylogenomics/taxonomy,Evolutionary relationships and taxonomy,0.1054748120852147,18,18
+Lepidotrigona,2,Symbiotic bacteria and probiotics,Symbiotic bacteria/probiotics,T2. Symbiotic bacteria/probiotics,Microbiome and symbiosis,0.06041893654696607,18,18
+Lepidotrigona,3,"Viral pathogens, floral resources and metabarcoding",Pathogens/metabarcoding,T3. Pathogens/metabarcoding,Disease ecology and environmental DNA,0.044400991927298225,18,18
+Lepidotrigona,4,Mitogenomics and mitochondrial genome evolution,Mitogenomics,T4. Mitogenomics,Genome architecture and comparative genomics,0.38531864140811906,18,18
+Lepidotrigona,5,"Cytogenetics, karyotypes and chromosome architecture",Cytogenetics/karyotypes,T5. Cytogenetics/karyotypes,Cytogenetics and cytogenomics,0.00876842482894273,18,18
+Lepidotrigona,6,mtDNA/COI marker assays and DNA barcoding,mtDNA/COI markers,T6. mtDNA/COI markers,"Marker assays, barcoding and molecular identification",0.2903647725602616,18,18
+Lepidotrigona,7,"Population genetics, microsatellites and morphometrics",Population genetics,T7. Population genetics,Population structure and phenotypic differentiation,0.01523141799956816,18,18
+Lepidotrigona,8,"Gene expression, caste differentiation and reproductive genetics",Expression/caste,T8. Expression/caste,Functional and reproductive genomics,0.0021925074773719664,18,18
+Lepidotrigona,9,"Gut microbiome, detoxification and exposure responses",Microbiome/exposure,T9. Microbiome/exposure,Microbiome and environmental stress,0.0837904521734297,18,18
+Lepidotrigona,10,"Allozyme, RAPD and enzyme polymorphism markers",Allozyme/RAPD markers,T10. Allozyme/RAPD markers,Classical marker-based genetics,0.004039042992827894,18,18
