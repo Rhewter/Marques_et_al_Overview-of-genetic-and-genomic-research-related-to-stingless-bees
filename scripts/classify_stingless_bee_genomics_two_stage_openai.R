@@ -1,17 +1,17 @@
 #!/usr/bin/env Rscript
 
-# Classificacao em duas etapas:
-# 1) classifica todos os artigos usando apenas o titulo;
-# 2) usa titulo + resumo somente para casos de menor confianca/checagem.
+# Two-stage classification:
+# 1) classifies all articles using titles only;
+# 2) uses title + abstract only for lower-confidence cases requiring review.
 
 required_packages <- c("httr2", "jsonlite")
 missing_packages <- required_packages[!vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)]
 
 if (length(missing_packages) > 0) {
   stop(
-    "Instale os pacotes ausentes antes de rodar o script: ",
+    "Install the missing packages before running the script: ",
     paste(missing_packages, collapse = ", "),
-    "\nExemplo: install.packages(c(",
+    "\nExample: install.packages(c(",
     paste(sprintf('"%s"', missing_packages), collapse = ", "),
     "))",
     call. = FALSE
@@ -52,20 +52,20 @@ args <- parse_args(commandArgs(trailingOnly = TRUE))
 if (isTRUE(args$help) || isTRUE(args$h)) {
   cat(
     paste0(
-      "Uso:\n",
-      "  Rscript scripts/classify_stingless_bee_genomics_two_stage_openai.R [opcoes]\n\n",
-      "Opcoes:\n",
-      "  --input=ARQUIVO             CSV com title e abstract. Padrao: CSV mais recente *_titles_abstracts_*.csv\n",
-      "  --output=ARQUIVO            CSV final classificado.\n",
-      "  --checkpoint-prefix=PREFIX  Prefixo dos JSONL de checkpoint.\n",
-      "  --model=MODELO              Modelo OpenAI para ambas as etapas. Padrao: gpt-4.1-mini\n",
-      "  --title-model=MODELO        Modelo para triagem por titulo. Padrao: --model\n",
-      "  --abstract-model=MODELO     Modelo para revisao com resumo. Padrao: --model\n",
-      "  --title-batch-size=N        Artigos por chamada na etapa de titulo. Padrao: 100\n",
-      "  --abstract-batch-size=N     Artigos por chamada na etapa com resumo. Padrao: 25\n",
-      "  --skip-abstract-review      Executa somente a etapa de classificacao por titulo.\n",
-      "  --max-records=N             Classifica apenas os N primeiros registros, util para teste.\n",
-      "  --api-key=CHAVE             Chave OpenAI. Tambem pode usar OPENAI_API_KEY.\n"
+      "Usage:\n",
+      "  Rscript scripts/classify_stingless_bee_genomics_two_stage_openai.R [options]\n\n",
+      "Options:\n",
+      "  --input=FILE             CSV containing title and abstract. Default: most recent *_titles_abstracts_*.csv\n",
+      "  --output=FILE            Final classified CSV.\n",
+      "  --checkpoint-prefix=PREFIX  Prefix for checkpoint JSONL files.\n",
+      "  --model=MODEL              OpenAI model for both stages. Default: gpt-4.1-mini\n",
+      "  --title-model=MODEL        Model for title screening. Default: --model\n",
+      "  --abstract-model=MODEL     Model for abstract review. Default: --model\n",
+      "  --title-batch-size=N        Articles per title-stage request. Default: 100\n",
+      "  --abstract-batch-size=N     Articles per abstract-stage request. Default: 25\n",
+      "  --skip-abstract-review      Run only the title-classification stage.\n",
+      "  --max-records=N             Classify only the first N records; useful for testing.\n",
+      "  --api-key=KEY             OpenAI key; OPENAI_API_KEY may also be used.\n"
     )
   )
   quit(status = 0)
@@ -77,7 +77,7 @@ if (is.null(input_file)) {
   if (length(candidates) > 0) input_file <- candidates[which.max(file.info(candidates)$mtime)]
 }
 if (is.null(input_file) || !file.exists(input_file)) {
-  stop("Informe um CSV valido com --input=ARQUIVO.", call. = FALSE)
+  stop("Provide an existing CSV with --input=FILE.", call. = FALSE)
 }
 
 model <- args$model %||% "gpt-4.1-mini"
@@ -85,7 +85,7 @@ title_model <- args[["title-model"]] %||% model
 abstract_model <- args[["abstract-model"]] %||% model
 api_key <- args[["api-key"]] %||% Sys.getenv("OPENAI_API_KEY")
 if (identical(api_key, "")) {
-  stop("API key nao encontrada. Defina OPENAI_API_KEY ou use --api-key=SUA_CHAVE.", call. = FALSE)
+  stop("API key not found. Set OPENAI_API_KEY or use --api-key=YOUR_KEY.", call. = FALSE)
 }
 
 title_batch_size <- as.integer(args[["title-batch-size"]] %||% 100L)
@@ -95,13 +95,13 @@ max_records <- args[["max-records"]]
 if (!is.null(max_records)) max_records <- as.integer(max_records)
 
 if (is.na(title_batch_size) || title_batch_size < 1 || title_batch_size > 150) {
-  stop("--title-batch-size precisa ser entre 1 e 150.", call. = FALSE)
+  stop("--title-batch-size must be between 1 and 150.", call. = FALSE)
 }
 if (is.na(abstract_batch_size) || abstract_batch_size < 1 || abstract_batch_size > 75) {
-  stop("--abstract-batch-size precisa ser entre 1 e 75.", call. = FALSE)
+  stop("--abstract-batch-size must be between 1 and 75.", call. = FALSE)
 }
 if (!is.null(max_records) && (is.na(max_records) || max_records < 1)) {
-  stop("--max-records precisa ser um inteiro positivo.", call. = FALSE)
+  stop("--max-records must be a positive integer.", call. = FALSE)
 }
 
 output_file <- args$output %||% sub("\\.csv$", "_genomics_ai_two_stage.csv", input_file)
@@ -188,32 +188,32 @@ schema <- list(
 )
 
 base_rules <- paste(
-  "Voce e um revisor sistematico especialista em abelhas sem ferrao (Meliponini), genetica e genomica.",
-  "A pergunta e: o artigo trata de genetica/genomica relacionada a abelhas sem ferrao?",
-  "Considere SIM quando houver evidencia de DNA barcoding, COI, 16S, mtDNA, mitogenoma, genoma, transcriptoma, expressao genica, filogenia molecular, SNP, microssatelite, marcador molecular, metabarcoding, metagenomica ou microbioma.",
-  "A relacao com abelhas sem ferrao precisa ser clara.",
-  "Para outros organismos, como polen, microbiota, plantas ou patogenos, conte como SIM apenas se a amostra for claramente da abelha, do corpo dela, do ninho, produto do ninho ou material carregado pela abelha sem ferrao.",
-  "Marque NAO para quimica, comportamento, ecologia, morfologia, produto apicola, toxicologia ou manejo sem evidencia molecular/genetica/genomica.",
-  "Marque UNCLEAR quando a informacao disponivel for insuficiente.",
-  "Forneca evidencias curtas copiadas do texto disponivel para auditoria visual.",
+  "You are a systematic reviewer with expertise in stingless bees (Meliponini), genetics, and genomics.",
+  "Question: does the article address genetics or genomics related to stingless bees?",
+  "Classify as YES when there is evidence of DNA barcoding, COI, 16S, mtDNA, mitogenomes, genomes, transcriptomics, gene expression, molecular phylogenetics, SNPs, microsatellites, molecular markers, metabarcoding, metagenomics, or microbiome analysis.",
+  "The relationship to stingless bees must be explicit.",
+  "For other organisms, such as pollen, microbiota, plants, or pathogens, classify as YES only when the sample clearly comes from the stingless bee, its body, nest, nest product, or material carried by the bee.",
+  "Classify as NO for chemistry, behavior, ecology, morphology, bee products, toxicology, or management without molecular, genetic, or genomic evidence.",
+  "Classify as UNCLEAR when the available information is insufficient.",
+  "Provide short evidence excerpts from the supplied text for auditing.",
   sep = "\n"
 )
 
 title_prompt <- paste(
   base_rules,
-  "ETAPA 1: use APENAS o titulo. Nao invente informacoes que dependeriam do resumo.",
-  "Use confidence='high' somente quando o titulo deixar a decisao muito clara.",
-  "Use confidence='medium' ou 'low' e needs_manual_check=true quando o resumo puder mudar a decisao.",
-  "decision_basis deve ser 'title_only'.",
+  "STAGE 1: use the title ONLY. Do not infer information that would require the abstract.",
+  "Use confidence='high' only when the title makes the decision very clear.",
+  "Use confidence='medium' or 'low' and needs_manual_check=true when the abstract could change the decision.",
+  "decision_basis must be 'title_only'.",
   sep = "\n"
 )
 
 abstract_prompt <- paste(
   base_rules,
-  "ETAPA 2: revise uma classificacao preliminar usando titulo + resumo.",
-  "Voce pode confirmar ou alterar a decisao preliminar.",
-  "Se o resumo estiver ausente ou ainda ambiguo, mantenha needs_manual_check=true.",
-  "decision_basis deve ser 'title_and_abstract'.",
+  "STAGE 2: review a preliminary classification using the title and abstract.",
+  "You may confirm or change the preliminary decision.",
+  "If the abstract is missing or remains ambiguous, retain needs_manual_check=true.",
+  "decision_basis must be 'title_and_abstract'.",
   sep = "\n"
 )
 
@@ -236,8 +236,8 @@ call_openai <- function(records, system_prompt, request_model) {
       list(
         role = "user",
         content = paste(
-          "Classifique os registros abaixo e responda somente no JSON schema solicitado.",
-          "Retorne uma classificacao para cada record_id.",
+          "Classify the records below and respond only with the requested JSON schema.",
+          "Return one classification for each record_id.",
           jsonlite::toJSON(list(records = records), auto_unbox = TRUE, null = "null", pretty = TRUE),
           sep = "\n\n"
         )
@@ -272,7 +272,7 @@ call_openai <- function(records, system_prompt, request_model) {
 
       response_body <- httr2::resp_body_json(response, simplifyVector = FALSE)
       output_text <- extract_output_text(response_body)
-      if (!nzchar(output_text)) stop("Resposta sem output_text da API OpenAI.", call. = FALSE)
+      if (!nzchar(output_text)) stop("OpenAI API response did not contain output_text.", call. = FALSE)
       jsonlite::fromJSON(output_text, simplifyVector = FALSE)
     }, error = function(e) {
       last_error <<- conditionMessage(e)
@@ -283,11 +283,11 @@ call_openai <- function(records, system_prompt, request_model) {
       return(parsed$classifications)
     }
 
-    message("Resposta invalida da API; tentando novamente (", attempt, "/4): ", last_error)
+    message("Invalid API response; retrying (", attempt, "/4): ", last_error)
     Sys.sleep(min(30, 2^attempt))
   }
 
-  stop("Falha ao obter JSON valido da API OpenAI apos retries: ", last_error, call. = FALSE)
+  stop("Failed to obtain valid JSON from the OpenAI API after retries: ", last_error, call. = FALSE)
 }
 
 read_jsonl <- function(path) {
@@ -337,7 +337,7 @@ run_batches <- function(df, batch_size, checkpoint, prompt, make_record, request
   done <- completed_ids(checkpoint)
   pending <- df[!df$record_id %in% done, , drop = FALSE]
   message("Checkpoint: ", checkpoint)
-  message("Ja concluidos: ", length(intersect(df$record_id, done)), "; pendentes: ", nrow(pending))
+  message("Already completed: ", length(intersect(df$record_id, done)), "; pending: ", nrow(pending))
   if (nrow(pending) == 0) return(invisible(NULL))
 
   classify_records_safely <- function(records, depth = 0) {
@@ -361,14 +361,14 @@ run_batches <- function(df, batch_size, checkpoint, prompt, make_record, request
         retry_result <- call_openai(list(record), prompt, request_model = request_model)
         retry_returned <- vapply(retry_result, function(x) as.integer(x$record_id), integer(1))
         if (!as.integer(record$record_id) %in% retry_returned) {
-          stop("A API nao retornou record_id: ", record$record_id, call. = FALSE)
+          stop("The API did not return record_id: ", record$record_id, call. = FALSE)
         }
         append_jsonl(retry_result[retry_returned == as.integer(record$record_id)], checkpoint)
       }
       return(invisible(NULL))
     }
 
-    message("Resposta parcial; reprocessando ", length(missing), " record_id faltantes")
+    message("Partial response; reprocessing ", length(missing), " missing record_id values")
     missing_records <- records[expected %in% missing]
     sub_batches <- split(seq_along(missing_records), ceiling(seq_along(missing_records) / max(1, floor(length(missing_records) / 2))))
     for (idx in sub_batches) {
@@ -380,7 +380,7 @@ run_batches <- function(df, batch_size, checkpoint, prompt, make_record, request
   for (i in seq_along(batches)) {
     batch_df <- pending[batches[[i]], , drop = FALSE]
     records <- lapply(seq_len(nrow(batch_df)), function(j) make_record(batch_df[j, , drop = FALSE]))
-    message("Lote ", i, "/", length(batches), " (", length(records), " artigos)")
+    message("Batch ", i, "/", length(batches), " (", length(records), " articles)")
     classify_records_safely(records)
     Sys.sleep(0.15)
   }
@@ -388,18 +388,18 @@ run_batches <- function(df, batch_size, checkpoint, prompt, make_record, request
 
 articles <- utils::read.csv(input_file, check.names = FALSE, stringsAsFactors = FALSE)
 for (col in c("title", "abstract")) {
-  if (!col %in% names(articles)) stop("Coluna ausente no CSV: ", col, call. = FALSE)
+  if (!col %in% names(articles)) stop("Missing CSV column: ", col, call. = FALSE)
 }
 articles$record_id <- seq_len(nrow(articles))
 if (!is.null(max_records)) articles <- head(articles, max_records)
 
-message("Arquivo de entrada: ", input_file)
-message("Registros no escopo: ", nrow(articles))
-message("Modelo padrao: ", model)
-message("Modelo etapa titulo: ", title_model)
-message("Modelo etapa resumo: ", abstract_model)
+message("Input file: ", input_file)
+message("Records in scope: ", nrow(articles))
+message("Default model: ", model)
+message("Title-stage model: ", title_model)
+message("Abstract-stage model: ", abstract_model)
 
-message("Etapa 1: titulo")
+message("Stage 1: title")
 run_batches(
   articles,
   title_batch_size,
@@ -421,7 +421,7 @@ title_df <- title_df[title_df$record_id %in% articles$record_id, , drop = FALSE]
 
 if (skip_abstract_review) {
   review_articles <- articles[FALSE, , drop = FALSE]
-  message("Etapa 2: revisao com resumo ignorada por --skip-abstract-review")
+  message("Stage 2: abstract review skipped because of --skip-abstract-review")
 } else {
   review_ids <- title_df$record_id[
     title_df$confidence != "high" |
@@ -431,8 +431,8 @@ if (skip_abstract_review) {
   review_articles <- articles[articles$record_id %in% review_ids, , drop = FALSE]
 }
 
-message("Etapa 2: revisao com resumo")
-message("Registros selecionados para revisar com resumo: ", nrow(review_articles))
+message("Stage 2: abstract review")
+message("Records selected for abstract review: ", nrow(review_articles))
 if (!skip_abstract_review && nrow(review_articles) > 0) {
   title_lookup <- title_df
   run_batches(
@@ -486,11 +486,11 @@ final_df <- final_df[, c(preferred_cols, setdiff(names(final_df), preferred_cols
 
 utils::write.csv(final_df, output_file, row.names = FALSE, fileEncoding = "UTF-8")
 
-message("Classificacao concluida.")
-message("CSV final: ", output_file)
-message("Checkpoint titulos: ", title_jsonl)
-message("Checkpoint resumos: ", abstract_jsonl)
-message("Registros classificados como sim: ", sum(final_df$relevance == "yes", na.rm = TRUE))
-message("Registros incertos: ", sum(final_df$relevance == "unclear", na.rm = TRUE))
-message("Registros revisados com resumo: ", sum(final_df$decision_basis == "title_and_abstract", na.rm = TRUE))
-message("Registros para checagem manual: ", sum(final_df$needs_manual_check, na.rm = TRUE))
+message("Classification complete.")
+message("Final CSV: ", output_file)
+message("Title checkpoint: ", title_jsonl)
+message("Abstract checkpoint: ", abstract_jsonl)
+message("Records classified as yes: ", sum(final_df$relevance == "yes", na.rm = TRUE))
+message("Unclear records: ", sum(final_df$relevance == "unclear", na.rm = TRUE))
+message("Records reviewed with abstracts: ", sum(final_df$decision_basis == "title_and_abstract", na.rm = TRUE))
+message("Records requiring manual review: ", sum(final_df$needs_manual_check, na.rm = TRUE))

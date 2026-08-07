@@ -1,9 +1,9 @@
 #!/usr/bin/env Rscript
 
-# Usa IA para decidir se um artigo realmente estuda determinado taxon
-# (genero ou especie), em vez de apenas menciona-lo. O script parte dos
-# candidatos detectados por correspondencia taxonomica e gera contagens
-# auditaveis por especie e por genero.
+# Uses AI to determine whether an article actually studies a taxon
+# (genus or species) rather than merely mentioning it. The script starts from
+# candidates detected through taxonomic matching and produces
+# auditable species- and genus-level counts.
 
 required_packages <- c(
   "bibliometrix",
@@ -131,19 +131,19 @@ args <- parse_args(commandArgs(trailingOnly = TRUE))
 if (isTRUE(args$help) || isTRUE(args$h)) {
   cat(
     paste0(
-      "Uso:\n",
-      "  Rscript scripts/classify_taxon_studied_openai.R [opcoes]\n\n",
-      "Opcoes:\n",
-      "  --bib=ARQUIVO              BibTeX da Scopus.\n",
-      "  --input-csv=ARQUIVO        CSV alternativo com title, abstract, year, journal, doi.\n",
-      "  --candidate-workbook=XLSX  Workbook gerado por count_articles_by_meliponini_genus.R.\n",
-      "  --species-xlsx=ARQUIVO     Planilha de especies. Padrao: data/Meliponini_species.xlsx\n",
-      "  --genus-xlsx=ARQUIVO       Planilha de generos. Padrao: Meliponini_genus_list.xlsx\n",
-      "  --output-dir=DIR           Diretorio de saida. Padrao: data/article_counts_ai\n",
-      "  --model=MODELO             Modelo OpenAI. Padrao: gpt-4.1-mini\n",
-      "  --batch-size=N             Pares artigo-taxon por chamada. Padrao: 12\n",
-      "  --max-candidates=N         Limita candidatos, util para teste.\n",
-      "  --api-key=CHAVE            Chave OpenAI. Tambem pode usar OPENAI_API_KEY.\n"
+      "Usage:\n",
+      "  Rscript scripts/classify_taxon_studied_openai.R [options]\n\n",
+      "Options:\n",
+      "  --bib=FILE              Scopus BibTeX file.\n",
+      "  --input-csv=FILE        Alternative CSV containing title, abstract, year, journal, and doi.\n",
+      "  --candidate-workbook=XLSX  Workbook produced by count_articles_by_meliponini_genus.R.\n",
+      "  --species-xlsx=FILE     Species workbook. Default: data/Meliponini_species.xlsx\n",
+      "  --genus-xlsx=FILE       Genus workbook. Default: Meliponini_genus_list.xlsx\n",
+      "  --output-dir=DIR           Output directory. Default: data/article_counts_ai\n",
+      "  --model=MODEL             OpenAI model. Default: gpt-4.1-mini\n",
+      "  --batch-size=N             Article-taxon pairs per request. Default: 12\n",
+      "  --max-candidates=N         Limit candidates; useful for testing.\n",
+      "  --api-key=KEY            OpenAI key; OPENAI_API_KEY may also be used.\n"
     )
   )
   quit(status = 0)
@@ -164,21 +164,21 @@ if (!is.null(max_candidates)) max_candidates <- as.integer(max_candidates)
 api_key <- args[["api-key"]] %||% Sys.getenv("OPENAI_API_KEY")
 
 if (identical(api_key, "")) {
-  stop("API key nao encontrada. Defina OPENAI_API_KEY ou use --api-key.", call. = FALSE)
+  stop("API key not found. Set OPENAI_API_KEY or use --api-key.", call. = FALSE)
 }
 if (is.na(batch_size) || batch_size < 1 || batch_size > 30) {
-  stop("--batch-size precisa ser entre 1 e 30.", call. = FALSE)
+  stop("--batch-size must be between 1 and 30.", call. = FALSE)
 }
 if (!is.null(max_candidates) && (is.na(max_candidates) || max_candidates < 1)) {
-  stop("--max-candidates precisa ser inteiro positivo.", call. = FALSE)
+  stop("--max-candidates must be a positive integer.", call. = FALSE)
 }
-if (!file.exists(candidate_workbook)) stop("Workbook de candidatos nao encontrado: ", candidate_workbook, call. = FALSE)
+if (!file.exists(candidate_workbook)) stop("Candidate workbook not found: ", candidate_workbook, call. = FALSE)
 
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 checkpoint_file <- file.path(output_dir, "taxon_studied_ai_classifications.jsonl")
 
 if (!is.null(input_csv)) {
-  if (!file.exists(input_csv)) stop("CSV nao encontrado: ", input_csv, call. = FALSE)
+  if (!file.exists(input_csv)) stop("CSV not found: ", input_csv, call. = FALSE)
   message("Importando corpus CSV: ", input_csv)
   csv <- readr::read_csv(input_csv, show_col_types = FALSE)
   docs <- csv %>%
@@ -358,7 +358,7 @@ call_openai <- function(batch) {
     Sys.sleep(2 ^ attempt)
   }
 
-  stop("Falha na chamada OpenAI apos tentativas. Ultimo erro: ", last_error, call. = FALSE)
+  stop("Failed to call OpenAI after retries. Last error: ", last_error, call. = FALSE)
 }
 
 existing <- read_jsonl(checkpoint_file)
@@ -372,7 +372,7 @@ message("Restantes: ", nrow(remaining))
 if (nrow(remaining) > 0) {
   batches <- split(remaining, ceiling(seq_len(nrow(remaining)) / batch_size))
   for (i in seq_along(batches)) {
-    message("Lote ", i, "/", length(batches), " (", nrow(batches[[i]]), " candidatos)")
+    message("Batch ", i, "/", length(batches), " (", nrow(batches[[i]]), " candidates)")
     result <- call_openai(batches[[i]]) %>%
       mutate(
         candidate_id = as.integer(candidate_id),
@@ -505,7 +505,7 @@ openxlsx::write.xlsx(
 utils::write.csv(genus_ai_summary, file.path(output_dir, "meliponini_ai_studied_genus_counts.csv"), row.names = FALSE)
 utils::write.csv(species_ai_summary, file.path(output_dir, "meliponini_ai_studied_species_counts.csv"), row.names = FALSE)
 
-message("Concluido.")
-message("Saida principal: ", output_workbook)
-message("Use n_articles_ai_studied_species para especies.")
-message("Use n_articles_ai_studied_genus_combined para generos.")
+message("Complete.")
+message("Main output: ", output_workbook)
+message("Use n_articles_ai_studied_species for species.")
+message("Use n_articles_ai_studied_genus_combined for genera.")

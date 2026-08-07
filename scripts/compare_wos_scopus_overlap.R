@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
-# Compara registros deduplicados da Web of Science com a busca deduplicada da
-# Scopus e calcula quantos artigos da WoS ja estavam presentes na Scopus.
+# Compares deduplicated Web of Science records with the deduplicated
+# Scopus search and calculates how many WoS articles were already present in Scopus.
 
 required_packages <- character(0)
 missing_packages <- required_packages[!vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)]
@@ -52,12 +52,12 @@ args <- parse_args(commandArgs(trailingOnly = TRUE))
 if (isTRUE(args$help) || isTRUE(args$h)) {
   cat(
     paste0(
-      "Uso:\n",
-      "  Rscript scripts/compare_wos_scopus_overlap.R --wos=ARQUIVO --scopus=ARQUIVO [--output=ARQUIVO]\n\n",
-      "Opcoes:\n",
-      "  --wos=ARQUIVO       CSV deduplicado gerado por download_wos_meliponini.R.\n",
-      "  --scopus=ARQUIVO    CSV deduplicado gerado por download_scopus_meliponini.R.\n",
-      "  --output=ARQUIVO    CSV com a classificacao do pareamento. Opcional.\n"
+      "Usage:\n",
+      "  Rscript scripts/compare_wos_scopus_overlap.R --wos=FILE --scopus=FILE [--output=FILE]\n\n",
+      "Options:\n",
+      "  --wos=FILE       Deduplicated CSV produced by download_wos_meliponini.R.\n",
+      "  --scopus=FILE    Deduplicated CSV produced by download_scopus_meliponini.R.\n",
+      "  --output=FILE    CSV containing match classifications. Optional.\n"
     )
   )
   quit(status = 0)
@@ -68,11 +68,11 @@ scopus_file <- args$scopus
 output_file <- args$output
 
 if (is.null(wos_file) || !file.exists(wos_file)) {
-  stop("Informe um CSV WoS existente com --wos=ARQUIVO.", call. = FALSE)
+  stop("Provide an existing WoS CSV with --wos=FILE.", call. = FALSE)
 }
 
 if (is.null(scopus_file) || !file.exists(scopus_file)) {
-  stop("Informe um CSV Scopus existente com --scopus=ARQUIVO.", call. = FALSE)
+  stop("Provide an existing Scopus CSV with --scopus=FILE.", call. = FALSE)
 }
 
 normalize_text <- function(x) {
@@ -109,11 +109,11 @@ scopus_doi_col <- first_existing_col(scopus, c("prism:doi", "doi", "DI"))
 scopus_title_col <- first_existing_col(scopus, c("dc:title", "title", "TI"))
 
 if (is.null(wos_doi_col) && is.null(wos_title_col)) {
-  stop("Nao encontrei DOI nem titulo no CSV WoS.", call. = FALSE)
+  stop("No DOI or title column was found in the WoS CSV.", call. = FALSE)
 }
 
 if (is.null(scopus_doi_col) && is.null(scopus_title_col)) {
-  stop("Nao encontrei DOI nem titulo no CSV Scopus.", call. = FALSE)
+  stop("No DOI or title column was found in the Scopus CSV.", call. = FALSE)
 }
 
 wos$doi_norm <- if (!is.null(wos_doi_col)) normalize_doi(wos[[wos_doi_col]]) else ""
@@ -157,5 +157,5 @@ print(summary, row.names = FALSE)
 if (!is.null(output_file) && nzchar(output_file)) {
   dir.create(dirname(output_file), recursive = TRUE, showWarnings = FALSE)
   utils::write.csv(wos, output_file, row.names = FALSE, fileEncoding = "UTF-8")
-  message("Arquivo de pareamento salvo em: ", output_file)
+  message("Match file written to: ", output_file)
 }

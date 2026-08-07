@@ -1,13 +1,13 @@
 #!/usr/bin/env Rscript
 
-# Busca na Web of Science Core Collection todos os registros que mencionam ao
-# menos um dos generos listados em Meliponini_genus_list.xlsx.
+# Retrieves all Web of Science Core Collection records mentioning
+# at least one genus listed em Meliponini_genus_list.xlsx.
 #
-# O script usa a Web of Science Expanded API por padrao:
+# The script uses the Web of Science Expanded API by default:
 #   https://api.clarivate.com/api/wos
 #
-# A chave deve ser informada via --api-key ou pelas variaveis de ambiente
-# WOS_API_KEY, WEB_OF_SCIENCE_API_KEY ou CLARIVATE_API_KEY.
+# Supply the key through --api-key or the environment variables
+# WOS_API_KEY, WEB_OF_SCIENCE_API_KEY, or CLARIVATE_API_KEY.
 
 required_packages <- c("readxl", "httr2", "jsonlite")
 missing_packages <- required_packages[!vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)]
@@ -65,23 +65,23 @@ args <- parse_args(commandArgs(trailingOnly = TRUE))
 if (isTRUE(args$help) || isTRUE(args$h)) {
   cat(
     paste0(
-      "Uso:\n",
-      "  Rscript scripts/download_wos_meliponini.R [opcoes]\n\n",
-      "Opcoes:\n",
-      "  --input=ARQUIVO             Planilha com a lista de generos. Padrao: Meliponini_genus_list.xlsx\n",
-      "  --genus-col=COLUNA          Coluna que contem os generos. Padrao: Genero/Genero\n",
-      "  --output-dir=PASTA          Pasta de saida. Padrao: data/wos\n",
-      "  --api-base=URL              Endpoint da WoS API. Padrao: https://api.clarivate.com/api/wos\n",
-      "  --api-key=CHAVE             Chave Clarivate/WoS. Tambem pode usar WOS_API_KEY, WEB_OF_SCIENCE_API_KEY ou CLARIVATE_API_KEY.\n",
-      "  --database-id=ID            Base WoS. Padrao: WOS\n",
-      "  --field=CAMPO               Campo WoS pesquisado. Padrao: TS\n",
-      "  --count=N                   Registros por pagina. Padrao: 100\n",
-      "  --max-count=N               Maximo global de registros baixados. Padrao: 20000\n",
-      "  --terms-per-query=N         Generos por lote de query. Padrao: 30\n",
-      "  --option-view=FS            Visao da Expanded API, por exemplo FS ou SR. Padrao: FS\n",
-      "  --lang=IDIOMA               Idioma da API. Padrao: en\n",
-      "  --wait-time=SEGUNDOS        Pausa entre requisicoes. Padrao: 0.25\n",
-      "  --dry-run                   Apenas salva/mostra as queries, sem acessar a API.\n"
+      "Usage:\n",
+      "  Rscript scripts/download_wos_meliponini.R [options]\n\n",
+      "Options:\n",
+      "  --input=FILE             Workbook containing the genus list. Default: Meliponini_genus_list.xlsx\n",
+      "  --genus-col=COLUMN          Column containing genus names. Default: Genero/Genero\n",
+      "  --output-dir=DIR          Output directory. Default: data/wos\n",
+      "  --api-base=URL              Endpoint da WoS API. Default: https://api.clarivate.com/api/wos\n",
+      "  --api-key=KEY             Clarivate/WoS key; WOS_API_KEY, WEB_OF_SCIENCE_API_KEY, or CLARIVATE_API_KEY may also be used.\n",
+      "  --database-id=ID            Base WoS. Default: WOS\n",
+      "  --field=CAMPO               Campo WoS pesquisado. Default: TS\n",
+      "  --count=N                   Records per page. Default: 100\n",
+      "  --max-count=N               Maximum total downloaded records. Default: 20000\n",
+      "  --terms-per-query=N         Genera per query batch. Default: 30\n",
+      "  --option-view=FS            View for the Expanded API, for example FS ou SR. Default: FS\n",
+      "  --lang=IDIOMA               Idioma da API. Default: en\n",
+      "  --wait-time=SEGUNDOS        Pausa entre requisicoes. Default: 0.25\n",
+      "  --dry-run                   Save and display queries without calling the API.\n"
     )
   )
   quit(status = 0)
@@ -106,28 +106,28 @@ wait_time <- as.numeric(args[["wait-time"]] %||% 0.25)
 dry_run <- isTRUE(args[["dry-run"]])
 
 if (!file.exists(input_file)) {
-  stop("Arquivo de entrada nao encontrado: ", input_file, call. = FALSE)
+  stop("Input file not found: ", input_file, call. = FALSE)
 }
 
 if (is.na(count) || count < 1 || count > 100) {
-  stop("--count precisa ser um inteiro entre 1 e 100 para a WoS API.", call. = FALSE)
+  stop("--count must be an integer between 1 and 100 for the WoS API.", call. = FALSE)
 }
 
 if (is.na(max_count) || max_count < 1) {
-  stop("--max-count precisa ser um inteiro positivo.", call. = FALSE)
+  stop("--max-count must be a positive integer.", call. = FALSE)
 }
 
 if (is.na(terms_per_query) || terms_per_query < 1) {
-  stop("--terms-per-query precisa ser um inteiro positivo.", call. = FALSE)
+  stop("--terms-per-query must be a positive integer.", call. = FALSE)
 }
 
 if (is.na(wait_time) || wait_time < 0) {
-  stop("--wait-time precisa ser numerico e nao negativo.", call. = FALSE)
+  stop("--wait-time must be numeric and nonnegative.", call. = FALSE)
 }
 
 if (!dry_run && identical(api_key, "")) {
   stop(
-    "API key nao encontrada. Defina WOS_API_KEY, WEB_OF_SCIENCE_API_KEY ou CLARIVATE_API_KEY; ou rode com --api-key=SUA_CHAVE.",
+    "API key not found. Set WOS_API_KEY, WEB_OF_SCIENCE_API_KEY, or CLARIVATE_API_KEY; or run with --api-key=YOUR_KEY.",
     call. = FALSE
   )
 }
@@ -427,7 +427,7 @@ if (is.na(genus_col)) {
 
 if (is.na(genus_col)) {
   stop(
-    "Nao encontrei a coluna de generos. Colunas disponiveis: ",
+    "No genus column was found. Available columns: ",
     paste(names(genus_table), collapse = ", "),
     call. = FALSE
   )
@@ -439,7 +439,7 @@ genera <- unique(genera[!is.na(genera) & nzchar(genera)])
 genera <- sort(genera)
 
 if (length(genera) == 0) {
-  stop("A coluna de generos esta vazia: ", genus_col, call. = FALSE)
+  stop("The genus column is empty: ", genus_col, call. = FALSE)
 }
 
 query_batches <- split_batches(genera, terms_per_query)
@@ -459,18 +459,18 @@ writeLines(
   useBytes = TRUE
 )
 
-message("Arquivo de entrada: ", input_file)
-message("Coluna de generos: ", genus_col)
-message("Generos na consulta: ", length(genera))
+message("Input file: ", input_file)
+message("Genus column: ", genus_col)
+message("Genera in query: ", length(genera))
 message("Campo pesquisado: ", search_field)
-message("Lotes de query: ", length(queries), " (", terms_per_query, " generos por lote)")
+message("Query batches: ", length(queries), " (", terms_per_query, " genera per batch)")
 message("Endpoint WoS: ", api_base)
 message("Database ID: ", database_id)
 message("Option view: ", option_view)
 message("Queries salvas em: ", query_file)
 
 if (dry_run) {
-  message("Dry-run concluido. Nenhuma requisicao foi enviada para a API.")
+  message("Dry run complete. No API request was sent.")
   quit(status = 0)
 }
 
@@ -483,7 +483,7 @@ for (query_id in seq_along(queries)) {
   first_record <- 1L
   records_found <- NA_integer_
 
-  message("Iniciando lote ", query_id, "/", length(queries), "...")
+  message("Starting batch ", query_id, "/", length(queries), "...")
 
   repeat {
     remaining <- max_count - downloaded
@@ -500,7 +500,7 @@ for (query_id in seq_along(queries)) {
     all_pages[[length(all_pages) + 1]] <- page
 
     if (length(records) == 0) {
-      message("Nenhum registro retornado no lote ", query_id, " a partir de firstRecord=", first_record, ".")
+      message("No records returned in batch ", query_id, " starting at firstRecord=", first_record, ".")
       break
     }
 
@@ -509,10 +509,10 @@ for (query_id in seq_along(queries)) {
 
     downloaded <- downloaded + length(records)
     message(
-      "Lote ", query_id,
-      ": baixados ", length(records),
-      " nesta pagina; total global ", downloaded,
-      if (!is.na(records_found)) paste0("; encontrados no lote ", records_found) else ""
+      "Batch ", query_id,
+      ": downloaded ", length(records),
+      " on this page; overall total ", downloaded,
+      if (!is.na(records_found)) paste0("; records found in batch ", records_found) else ""
     )
 
     first_record <- first_record + length(records)
@@ -573,9 +573,9 @@ saveRDS(
 )
 
 message("Busca concluida.")
-message("Registros brutos: ", nrow(raw_df))
-message("Registros apos deduplicacao: ", nrow(articles_df))
-message("CSV deduplicado: ", csv_file)
+message("Raw records: ", nrow(raw_df))
+message("Records after deduplication: ", nrow(articles_df))
+message("Deduplicated CSV: ", csv_file)
 message("JSONL bruto: ", raw_jsonl_file)
 message("RDS completo: ", rds_file)
 message("Queries salvas em: ", query_file)

@@ -1,1 +1,13 @@
-cover_letter_mdpi_dna.md
+# Private editorial and submission materials are intentionally excluded.
+cover_letter*
+revision_reviewer/
+response_to_reviewer*
+point_by_point_response*
+dna-*.docx
+manuscript_draft*
+
+# Local editor and operating-system files.
+.DS_Store
+.Rhistory
+.RData
+Rplots.pdf

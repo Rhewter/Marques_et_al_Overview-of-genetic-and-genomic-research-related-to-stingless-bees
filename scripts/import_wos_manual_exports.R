@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 # Importa exportacoes manuais da Web of Science em BibTeX, combina os lotes,
-# deduplica internamente e, opcionalmente, compara com a busca Scopus.
+# deduplicates records internally and optionally compares them with the Scopus search.
 
 parse_args <- function(args) {
   parsed <- list()
@@ -45,13 +45,13 @@ args <- parse_args(commandArgs(trailingOnly = TRUE))
 if (isTRUE(args$help) || isTRUE(args$h)) {
   cat(
     paste0(
-      "Uso:\n",
-      "  Rscript scripts/import_wos_manual_exports.R [opcoes]\n\n",
-      "Opcoes:\n",
-      "  --input-dir=PASTA       Pasta com arquivos .bib da WoS. Padrao: data/wos\n",
-      "  --pattern=REGEX         Padrao dos arquivos. Padrao: \\\\.bib$\n",
-      "  --output-dir=PASTA      Pasta de saida. Padrao: data/wos/processed\n",
-      "  --scopus=ARQUIVO        CSV deduplicado da Scopus para comparar duplicatas. Opcional.\n"
+      "Usage:\n",
+      "  Rscript scripts/import_wos_manual_exports.R [options]\n\n",
+      "Options:\n",
+      "  --input-dir=DIR       Directory containing WoS .bib files. Default: data/wos\n",
+      "  --pattern=REGEX         Input filename pattern. Default: \\\\.bib$\n",
+      "  --output-dir=DIR      Output directory. Default: data/wos/processed\n",
+      "  --scopus=FILE        Deduplicated Scopus CSV used for duplicate comparison. Optional.\n"
     )
   )
   quit(status = 0)
@@ -63,7 +63,7 @@ output_dir <- args[["output-dir"]] %||% "data/wos/processed"
 scopus_file <- args$scopus
 
 if (!dir.exists(input_dir)) {
-  stop("Pasta de entrada nao encontrada: ", input_dir, call. = FALSE)
+  stop("Input directory not found: ", input_dir, call. = FALSE)
 }
 
 files <- list.files(input_dir, pattern = pattern, full.names = TRUE)
@@ -71,7 +71,7 @@ files <- files[grepl("\\.bib$", files, ignore.case = TRUE)]
 files <- sort(files)
 
 if (length(files) == 0) {
-  stop("Nenhum arquivo .bib encontrado em: ", input_dir, call. = FALSE)
+  stop("No .bib files found in: ", input_dir, call. = FALSE)
 }
 
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
@@ -220,7 +220,7 @@ bind_rows_fill <- function(dfs) {
   do.call(rbind, dfs)
 }
 
-message("Arquivos BibTeX WoS encontrados: ", length(files))
+message("WoS BibTeX files found: ", length(files))
 for (file in files) {
   message(" - ", file)
 }
@@ -283,7 +283,7 @@ overlap_csv <- NA_character_
 
 if (!is.null(scopus_file) && nzchar(scopus_file)) {
   if (!file.exists(scopus_file)) {
-    stop("Arquivo Scopus nao encontrado: ", scopus_file, call. = FALSE)
+    stop("Scopus file not found: ", scopus_file, call. = FALSE)
   }
 
   scopus <- utils::read.csv(scopus_file, stringsAsFactors = FALSE, check.names = FALSE)
@@ -335,8 +335,8 @@ utils::write.csv(summary_rows, summary_csv, row.names = FALSE, fileEncoding = "U
 
 print(summary_rows, row.names = FALSE)
 message("CSV WoS bruto: ", raw_csv)
-message("CSV WoS deduplicado: ", dedup_csv)
-message("Resumo: ", summary_csv)
+message("Deduplicated WoS CSV: ", dedup_csv)
+message("Summary: ", summary_csv)
 if (!is.na(overlap_csv)) {
   message("Comparacao WoS x Scopus: ", overlap_csv)
 }

@@ -1,9 +1,9 @@
 #!/usr/bin/env Rscript
 
-# Analise de Structural Topic Modelling (STM) para exportacao BibTeX da Scopus.
-# O script importa o .bib, prepara texto de titulo/resumo/palavras-chave,
-# testa valores de K, ajusta o melhor modelo e plota a prevalencia dos topicos
-# ao longo dos anos para destacar temas em ascensao recente.
+# Structural topic modeling (STM) analysis for Scopus BibTeX exports.
+# The script imports the .bib file; prepares title, abstract, and keyword text;
+# evaluates K values, fits the selected model, and plots topic prevalence
+# over time to identify recently increasing themes.
 
 required_packages <- c(
   "bibliometrix",
@@ -83,7 +83,7 @@ parse_args <- function(args) {
 as_integer_arg <- function(x, default, name, min_value = 1L) {
   value <- as.integer(x %||% default)
   if (is.na(value) || value < min_value) {
-    stop("--", name, " precisa ser um inteiro >= ", min_value, ".", call. = FALSE)
+    stop("--", name, " must be an integer >= ", min_value, ".", call. = FALSE)
   }
   value
 }
@@ -174,7 +174,7 @@ extract_taxon_stopwords <- function(species_file) {
   }
 
   if (!file.exists(species_file)) {
-    stop("Planilha de especies nao encontrada: ", species_file, call. = FALSE)
+    stop("Species workbook not found: ", species_file, call. = FALSE)
   }
 
   species_tbl <- readxl::read_excel(species_file, guess_max = 10000)
@@ -188,8 +188,8 @@ extract_taxon_stopwords <- function(species_file) {
 
   if (length(taxon_cols) == 0) {
     stop(
-      "Nao encontrei colunas taxonomicas na planilha. ",
-      "Esperava algo como Nome cientifico, Genero, Subgenero ou Epiteto especifico.",
+      "No taxonomic columns were found in the workbook. ",
+      "Expected a column such as scientific name, genus, subgenus, or specific epithet.",
       call. = FALSE
     )
   }
@@ -204,7 +204,7 @@ read_extra_stopwords <- function(extra_stopwords_file) {
   }
 
   if (!file.exists(extra_stopwords_file)) {
-    stop("Arquivo de stopwords adicionais nao encontrado: ", extra_stopwords_file, call. = FALSE)
+    stop("Additional stopword file not found: ", extra_stopwords_file, call. = FALSE)
   }
 
   lines <- readLines(extra_stopwords_file, warn = FALSE, encoding = "UTF-8")
@@ -281,33 +281,33 @@ args <- parse_args(commandArgs(trailingOnly = TRUE))
 if (isTRUE(args$help) || isTRUE(args$h)) {
   cat(
     paste0(
-      "Uso:\n",
-      "  Rscript scripts/run_stm_scopus_bib.R [opcoes]\n\n",
-      "Opcoes:\n",
-      "  --input=ARQUIVO          BibTeX da Scopus.\n",
-      "                           Padrao: data/scopus_export_May_2-2026_a80702bd-6141-4355-8ab3-3ee911a5ead3_Meliponini_genetics_and_genomics.bib\n",
+      "Usage:\n",
+      "  Rscript scripts/run_stm_scopus_bib.R [options]\n\n",
+      "Options:\n",
+      "  --input=FILE          Scopus BibTeX file.\n",
+      "                           Default: data/scopus_export_May_2-2026_a80702bd-6141-4355-8ab3-3ee911a5ead3_Meliponini_genetics_and_genomics.bib\n",
       "  --input-format=auto|scopus_bib|csv\n",
-      "                           Formato de entrada. CSV precisa ter title, abstract, year, journal, doi.\n",
-      "  --output-dir=DIR         Diretorio de saida. Padrao: results/stm\n",
-      "  --species-file=ARQUIVO   XLSX com nomes de especies/generos a remover.\n",
-      "                           Padrao: data/Meliponini_species.xlsx\n",
-      "  --extra-stopwords-file=ARQUIVO\n",
-      "                           TXT/CSV simples com stopwords adicionais, uma por linha.\n",
-      "  --document-covariates-file=ARQUIVO\n",
-      "                           CSV com covariaveis por artigo; une por article_id ou doc_id.\n",
+      "                           Input format. CSV must contain title, abstract, year, journal, doi.\n",
+      "  --output-dir=DIR         Output directory. Default: results/stm\n",
+      "  --species-file=FILE   XLSX containing species and genus names to remove.\n",
+      "                           Default: data/Meliponini_species.xlsx\n",
+      "  --extra-stopwords-file=FILE\n",
+      "                           Plain TXT or CSV with one additional stopword per line.\n",
+      "  --document-covariates-file=FILE\n",
+      "                           CSV with article covariates; joined by article_id or doc_id.\n",
       "  --prevalence-covariate=year|genus|region|subtribe\n",
-      "                           Covariavel de prevalencia do STM. Padrao: year\n",
-      "  --genus-min-docs=N       Generos com menos de N documentos viram Other_rare_genera. Padrao: 5\n",
-      "  --k-values=LISTA         Valores de K separados por virgula. Padrao: 5,8,10,12,15,20,25,30\n",
-      "  --min-docfreq=N          Mantem termos presentes em pelo menos N documentos. Padrao: 3\n",
-      "  --max-docfreq-prop=P     Remove termos em mais de P dos documentos. Padrao: 0.85\n",
-      "  --seed=N                 Semente reprodutivel. Padrao: 1234\n",
-      "  --force-k=N              Ajusta o modelo final com este K, mantendo searchK completo.\n",
-      "  --cores=N                Nucleos para searchK. Padrao: 1\n",
-      "  --top-words=N            Palavras por topico nas tabelas. Padrao: 12\n",
-      "  --frontier-window=N      Janela final, em anos, para detectar topicos ascendentes. Padrao: 5\n",
-      "  --stem=true|false        Aplica stemming. Padrao: false\n",
-      "  --overwrite              Sobrescreve saidas existentes.\n"
+      "                           STM prevalence covariate. Default: year\n",
+      "  --genus-min-docs=N       Genera with fewer than N documents become Other_rare_genera. Default: 5\n",
+      "  --k-values=LIST         Comma-separated K values. Default: 5,8,10,12,15,20,25,30\n",
+      "  --min-docfreq=N          Retain terms present in at least N documents. Default: 3\n",
+      "  --max-docfreq-prop=P     Remove terms present in more than proportion P of documents. Default: 0.85\n",
+      "  --seed=N                 Reproducible random seed. Default: 1234\n",
+      "  --force-k=N              Fit the final model with this K while retaining the complete searchK analysis.\n",
+      "  --cores=N                CPU cores for searchK. Default: 1\n",
+      "  --top-words=N            Words per topic in tables. Default: 12\n",
+      "  --frontier-window=N      Final window in years for detecting increasing topics. Default: 5\n",
+      "  --stem=true|false        Apply stemming. Default: false\n",
+      "  --overwrite              Replace existing outputs.\n"
     )
   )
   quit(status = 0)
@@ -335,25 +335,25 @@ overwrite <- as_logical_arg(args$overwrite, FALSE)
 max_docfreq_prop <- as.numeric(args[["max-docfreq-prop"]] %||% 0.85)
 
 if (is.na(max_docfreq_prop) || max_docfreq_prop <= 0 || max_docfreq_prop > 1) {
-  stop("--max-docfreq-prop precisa estar no intervalo (0, 1].", call. = FALSE)
+  stop("--max-docfreq-prop must be in the interval (0, 1].", call. = FALSE)
 }
 
 if (!prevalence_covariate %in% c("year", "genus", "region", "subtribe")) {
-  stop("--prevalence-covariate precisa ser 'year', 'genus', 'region' ou 'subtribe'.", call. = FALSE)
+  stop("--prevalence-covariate must be 'year', 'genus', 'region', or 'subtribe'.", call. = FALSE)
 }
 
 if (!input_format %in% c("auto", "scopus_bib", "csv")) {
-  stop("--input-format precisa ser auto, scopus_bib ou csv.", call. = FALSE)
+  stop("--input-format must be auto, scopus_bib, or csv.", call. = FALSE)
 }
 
 if (!file.exists(input_file)) {
-  stop("Arquivo de entrada nao encontrado: ", input_file, call. = FALSE)
+  stop("Input file not found: ", input_file, call. = FALSE)
 }
 
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
-# Algumas funcoes do stm usam graficos base internamente; manter um dispositivo
-# temporario aberto evita a criacao acidental de Rplots.pdf no diretorio raiz.
+# Some stm functions use base graphics internally; keeping a temporary device
+# open prevents accidental creation of Rplots.pdf in the repository root.
 base_plot_sink <- tempfile(pattern = "stm_base_plots_", fileext = ".pdf")
 grDevices::pdf(base_plot_sink)
 on.exit({
@@ -388,8 +388,8 @@ output_paths <- file.path(
 
 if (!overwrite && any(file.exists(output_paths))) {
   stop(
-    "Algumas saidas ja existem em ", output_dir, ". ",
-    "Use --overwrite para sobrescrever.",
+    "Some outputs already exist in ", output_dir, ". ",
+    "Use --overwrite to replace it.",
     call. = FALSE
   )
 }
@@ -457,10 +457,10 @@ metadata <- bind_cols(metadata, genus_assignments) %>%
 
 if (!is.null(document_covariates_file) && nzchar(document_covariates_file)) {
   if (!file.exists(document_covariates_file)) {
-    stop("Arquivo de covariaveis por documento nao encontrado: ", document_covariates_file, call. = FALSE)
+    stop("Document-covariate file not found: ", document_covariates_file, call. = FALSE)
   }
 
-  message("Importando covariaveis por documento: ", document_covariates_file)
+  message("Importing document covariates: ", document_covariates_file)
   document_covariates <- readr::read_csv(document_covariates_file, show_col_types = FALSE)
 
   if ("article_id" %in% names(metadata) && "article_id" %in% names(document_covariates)) {
@@ -478,7 +478,7 @@ if (!is.null(document_covariates_file) && nzchar(document_covariates_file)) {
       left_join(document_covariates, by = "doc_id")
   } else {
     stop(
-      "O arquivo de covariaveis precisa conter article_id ou doc_id para unir aos documentos.",
+      "The covariate file must contain article_id or doc_id for joining to documents.",
       call. = FALSE
     )
   }
@@ -509,7 +509,7 @@ if ("subtribe_for_stm" %in% names(metadata)) {
 }
 
 if (nrow(metadata) < 20) {
-  stop("Corpus muito pequeno depois da filtragem: ", nrow(metadata), " documentos.", call. = FALSE)
+  stop("Corpus is too small after filtering: ", nrow(metadata), " documents.", call. = FALSE)
 }
 
 readr::write_csv(metadata, file.path(output_dir, "stm_corpus_metadata.csv"))
@@ -528,8 +528,8 @@ readr::write_csv(
   file.path(output_dir, "stm_genus_assignments.csv")
 )
 
-message("Generos detectados na planilha: ", length(genus_names))
-message("Distribuicao da covariavel de genero:")
+message("Genera detected in the workbook: ", length(genus_names))
+message("Distribution of the genus covariate:")
 print(sort(table(metadata$genus_for_stm), decreasing = TRUE))
 
 custom_stopwords <- c(
@@ -555,17 +555,17 @@ readr::write_csv(
 )
 
 message(
-  "Removendo ", length(taxon_stopwords),
-  " termos taxonomicos de generos/especies a partir de: ", species_file
+  "Removing ", length(taxon_stopwords),
+  " taxonomic genus and species terms from: ", species_file
 )
 if (length(extra_stopwords) > 0) {
   message(
-    "Removendo ", length(extra_stopwords),
-    " stopwords adicionais a partir de: ", extra_stopwords_file
+    "Removing ", length(extra_stopwords),
+    " additional stopwords from: ", extra_stopwords_file
   )
 }
 
-message("Processando texto para STM: ", nrow(metadata), " documentos")
+message("Processing text for STM: ", nrow(metadata), " documents")
 processed <- stm::textProcessor(
   documents = metadata$text,
   metadata = metadata,
@@ -586,8 +586,8 @@ processed$documents <- manual_drop$documents
 processed$vocab <- manual_drop$vocab
 if (length(manual_drop$dropped) > 0) {
   message(
-    "Remocao adicional direta no vocabulario: ",
-    length(manual_drop$dropped), " termos encontrados."
+    "Additional direct vocabulary removal: ",
+    length(manual_drop$dropped), " terms found."
   )
 }
 
@@ -618,65 +618,65 @@ if ("subtribe_for_stm" %in% names(meta)) {
 
 if (length(documents) < 20 || length(vocab) < 30) {
   stop(
-    "Corpus insuficiente depois da preparacao: ",
-    length(documents), " documentos e ", length(vocab), " termos. ",
-    "Tente reduzir --min-docfreq.",
+    "Corpus is insufficient after preprocessing: ",
+    length(documents), " documents and ", length(vocab), " terms. ",
+    "Try reducing --min-docfreq.",
     call. = FALSE
   )
 }
 
 k_values <- k_values[k_values < length(documents)]
 if (length(k_values) == 0) {
-  stop("Nenhum K valido. Use valores menores que o numero de documentos preparados.", call. = FALSE)
+  stop("No valid K value. Use values smaller than the number of prepared documents.", call. = FALSE)
 }
 
 if (prevalence_covariate == "genus") {
   if (nlevels(meta$genus_for_stm) < 2) {
     stop(
-      "A covariavel de genero tem menos de dois niveis depois da preparacao. ",
-      "Tente reduzir --genus-min-docs ou revise a deteccao de generos.",
+      "The genus covariate has fewer than two levels after preprocessing. ",
+      "Try reducing --genus-min-docs or review genus detection.",
       call. = FALSE
     )
   }
   prevalence_formula <- ~ genus_for_stm
-  message("Covariavel de prevalencia do STM: genus_for_stm")
-  message("Niveis usados: ", paste(levels(meta$genus_for_stm), collapse = ", "))
+  message("STM prevalence covariate: genus_for_stm")
+  message("Levels used: ", paste(levels(meta$genus_for_stm), collapse = ", "))
 } else if (prevalence_covariate == "region") {
   if (!"region_for_stm" %in% names(meta)) {
     stop(
-      "A covariavel region_for_stm nao esta disponivel. ",
-      "Forneca --document-covariates-file com essa coluna.",
+      "The region_for_stm covariate is unavailable. ",
+      "Provide --document-covariates-file containing this column.",
       call. = FALSE
     )
   }
   if (nlevels(meta$region_for_stm) < 2) {
-    stop("A covariavel region_for_stm tem menos de dois niveis depois da preparacao.", call. = FALSE)
+    stop("The region_for_stm covariate has fewer than two levels after preprocessing.", call. = FALSE)
   }
   prevalence_formula <- ~ region_for_stm
-  message("Covariavel de prevalencia do STM: region_for_stm")
-  message("Niveis usados: ", paste(levels(meta$region_for_stm), collapse = ", "))
+  message("STM prevalence covariate: region_for_stm")
+  message("Levels used: ", paste(levels(meta$region_for_stm), collapse = ", "))
 } else if (prevalence_covariate == "subtribe") {
   if (!"subtribe_for_stm" %in% names(meta)) {
     stop(
-      "A covariavel subtribe_for_stm nao esta disponivel. ",
-      "Forneca --document-covariates-file com essa coluna.",
+      "The subtribe_for_stm covariate is unavailable. ",
+      "Provide --document-covariates-file containing this column.",
       call. = FALSE
     )
   }
   if (nlevels(meta$subtribe_for_stm) < 2) {
-    stop("A covariavel subtribe_for_stm tem menos de dois niveis depois da preparacao.", call. = FALSE)
+    stop("The subtribe_for_stm covariate has fewer than two levels after preprocessing.", call. = FALSE)
   }
   prevalence_formula <- ~ subtribe_for_stm
-  message("Covariavel de prevalencia do STM: subtribe_for_stm")
-  message("Niveis usados: ", paste(levels(meta$subtribe_for_stm), collapse = ", "))
+  message("STM prevalence covariate: subtribe_for_stm")
+  message("Levels used: ", paste(levels(meta$subtribe_for_stm), collapse = ", "))
 } else {
   prevalence_formula <- ~ s(year)
-  message("Covariavel de prevalencia do STM: s(year)")
+  message("STM prevalence covariate: s(year)")
 }
 
 message(
-  "Corpus preparado: ", length(documents), " documentos, ",
-  length(vocab), " termos. Testando K = ", paste(k_values, collapse = ", ")
+  "Prepared corpus: ", length(documents), " documents, ",
+  length(vocab), " terms. Evaluating K = ", paste(k_values, collapse = ", ")
 )
 searchk <- stm::searchK(
   documents = documents,
@@ -709,14 +709,14 @@ searchk_results <- as_tibble(lapply(searchk$results, function(x) {
   )
 
 if (all(is.na(searchk_results$composite_score))) {
-  stop("Nao foi possivel calcular score composto para escolha de K.", call. = FALSE)
+  stop("Unable to compute the composite score for K selection.", call. = FALSE)
 }
 
 composite_best_k <- searchk_results$K[which.max(searchk_results$composite_score)]
 best_k <- composite_best_k
 if (!is.null(force_k) && !is.na(force_k)) {
   if (!force_k %in% searchk_results$K) {
-    stop("--force-k precisa estar presente em --k-values para manter diagnosticos comparaveis.", call. = FALSE)
+    stop("--force-k must be included in --k-values to retain comparable diagnostics.", call. = FALSE)
   }
   best_k <- force_k
 }
@@ -771,9 +771,9 @@ ggplot(searchk_long, aes(x = K, y = value)) +
   theme_minimal(base_size = 11)
 ggsave(file.path(output_dir, "stm_searchk_diagnostics.png"), width = 10, height = 7, dpi = 300)
 
-message("Ajustando modelo final com K = ", best_k)
+message("Fitting final model with K = ", best_k)
 if (best_k != composite_best_k) {
-  message("Observacao: K = ", composite_best_k, " teve maior score composto nesta execucao, mas --force-k selecionou K = ", best_k)
+  message("Note: K = ", composite_best_k, " had the highest composite score in this run, but --force-k selected K = ", best_k)
 }
 final_model <- stm::stm(
   documents = documents,
@@ -872,11 +872,11 @@ ggplot(
   geom_tile(color = "white", linewidth = 0.2) +
   scale_fill_viridis_c(option = "C", labels = function(x) paste0(round(x * 100), "%")) +
   labs(
-    title = "Prevalencia media dos topicos por genero detectado",
-    subtitle = "Categorias raras foram agregadas conforme --genus-min-docs; Multiple indica documentos com mais de um genero mencionado",
-    x = "Genero/categoria",
-    y = "Topico",
-    fill = "Prevalencia"
+    title = "Mean topic prevalence by detected genus",
+    subtitle = "Rare categories were grouped according to --genus-min-docs; Multiple indicates documents mentioning more than one genus",
+    x = "Genus/category",
+    y = "Topic",
+    fill = "Prevalence"
   ) +
   theme_minimal(base_size = 10) +
   theme(
@@ -943,10 +943,10 @@ ggplot(topic_year_plot, aes(x = year, y = prevalence_smooth, group = topic)) +
   scale_linewidth_manual(values = c(`FALSE` = 0.35, `TRUE` = 0.9), guide = "none") +
   facet_wrap(~ topic_label, scales = "free_y") +
   labs(
-    title = "Prevalencia media dos topicos ao longo do tempo",
-    subtitle = paste0("Linhas destacadas: topicos com inclinacao positiva mais forte nos ultimos ", frontier_window, " anos"),
-    x = "Ano",
-    y = "Prevalencia media estimada"
+    title = "Mean topic prevalence over time",
+    subtitle = paste0("Highlighted lines: topics with the strongest positive slopes in the last ", frontier_window, " years"),
+    x = "Year",
+    y = "Estimated mean prevalence"
   ) +
   theme_minimal(base_size = 10) +
   theme(strip.text = element_text(hjust = 0))
@@ -959,19 +959,19 @@ ggplot(
   geom_line(linewidth = 0.9) +
   geom_point(size = 1.4) +
   labs(
-    title = "Temas de fronteira em genetica/genomica de Meliponini",
-    subtitle = paste0("Topicos com maior tendencia positiva desde ", recent_start),
-    x = "Ano",
-    y = "Prevalencia media estimada",
-    color = "Topico"
+    title = "Frontier themes in Meliponini genetics and genomics",
+    subtitle = paste0("Topics with the strongest positive trend since ", recent_start),
+    x = "Year",
+    y = "Estimated mean prevalence",
+    color = "Topic"
   ) +
   theme_minimal(base_size = 11) +
   theme(legend.position = "bottom")
 ggsave(file.path(output_dir, "stm_frontier_topics.png"), width = 10, height = 6, dpi = 300)
 
-message("Concluido.")
-message("K selecionado: ", best_k)
-message("Principais saidas:")
+message("Complete.")
+message("Selected K: ", best_k)
+message("Main outputs:")
 message("  - ", file.path(output_dir, "stm_searchk_results.csv"))
 message("  - ", file.path(output_dir, "stm_topic_labels.csv"))
 message("  - ", file.path(output_dir, "stm_topics_over_time.png"))

@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
-# Busca na Scopus todos os registros que mencionam ao menos um dos generos
-# listados em Meliponini_genus_list.xlsx, usando o pacote rscopus.
+# Retrieves all Scopus records mentioning at least one genus
+# listed in Meliponini_genus_list.xlsx using the rscopus package.
 
 required_packages <- c("readxl", "rscopus")
 missing_packages <- required_packages[!vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)]
@@ -59,18 +59,18 @@ args <- parse_args(commandArgs(trailingOnly = TRUE))
 if (isTRUE(args$help) || isTRUE(args$h)) {
   cat(
     paste0(
-      "Uso:\n",
-      "  Rscript scripts/download_scopus_meliponini.R [opcoes]\n\n",
-      "Opcoes:\n",
-      "  --input=ARQUIVO        Planilha com a lista de generos. Padrao: Meliponini_genus_list.xlsx\n",
-      "  --genus-col=COLUNA     Coluna que contem os generos. Padrao: Genero/Gênero\n",
-      "  --output-dir=PASTA     Pasta de saida. Padrao: data/scopus\n",
-      "  --field=CAMPO          Campo Scopus pesquisado. Padrao: TITLE-ABS-KEY\n",
-      "  --count=N              Registros por pagina. Padrao: 25\n",
-      "  --max-count=N          Maximo de registros baixados. Padrao: 20000\n",
-      "  --view=STANDARD        View da API: STANDARD ou COMPLETE. Padrao: STANDARD\n",
+      "Usage:\n",
+      "  Rscript scripts/download_scopus_meliponini.R [options]\n\n",
+      "Options:\n",
+      "  --input=FILE        Workbook containing the genus list. Default: Meliponini_genus_list.xlsx\n",
+      "  --genus-col=COLUMN     Column containing genus names. Default: Genero/Gênero\n",
+      "  --output-dir=DIR     Output directory. Default: data/scopus\n",
+      "  --field=CAMPO          Campo Scopus pesquisado. Default: TITLE-ABS-KEY\n",
+      "  --count=N              Records per page. Default: 25\n",
+      "  --max-count=N          Maximum number of downloaded records. Default: 20000\n",
+      "  --view=STANDARD        View da API: STANDARD ou COMPLETE. Default: STANDARD\n",
       "  --verbose              Mostra o log detalhado do rscopus.\n",
-      "  --api-key=CHAVE        Chave Elsevier/Scopus. Tambem pode usar Elsevier_API ou ELSEVIER_API_KEY.\n"
+      "  --api-key=KEY        Elsevier/Scopus key; Elsevier_API or ELSEVIER_API_KEY may also be used.\n"
     )
   )
   quit(status = 0)
@@ -87,24 +87,24 @@ api_key <- args[["api-key"]] %||% Sys.getenv("Elsevier_API") %||% Sys.getenv("EL
 verbose <- isTRUE(args$verbose)
 
 if (!file.exists(input_file)) {
-  stop("Arquivo de entrada nao encontrado: ", input_file, call. = FALSE)
+  stop("Input file not found: ", input_file, call. = FALSE)
 }
 
 if (is.na(count) || count < 1) {
-  stop("--count precisa ser um inteiro positivo.", call. = FALSE)
+  stop("--count must be a positive integer.", call. = FALSE)
 }
 
 if (is.na(max_count) || max_count < 1) {
-  stop("--max-count precisa ser um inteiro positivo.", call. = FALSE)
+  stop("--max-count must be a positive integer.", call. = FALSE)
 }
 
 if (!view %in% c("STANDARD", "COMPLETE")) {
-  stop("--view precisa ser STANDARD ou COMPLETE.", call. = FALSE)
+  stop("--view must be STANDARD or COMPLETE.", call. = FALSE)
 }
 
 if (identical(api_key, "")) {
   stop(
-    "API key nao encontrada. Defina Elsevier_API ou rode com --api-key=SUA_CHAVE.",
+    "API key not found. Set Elsevier_API or run with --api-key=YOUR_KEY.",
     call. = FALSE
   )
 }
@@ -130,7 +130,7 @@ if (is.na(genus_col)) {
 
 if (is.na(genus_col)) {
   stop(
-    "Nao encontrei a coluna de generos. Colunas disponiveis: ",
+    "No genus column was found. Available columns: ",
     paste(names(genus_table), collapse = ", "),
     call. = FALSE
   )
@@ -142,7 +142,7 @@ genera <- unique(genera[!is.na(genera) & nzchar(genera)])
 genera <- sort(genera)
 
 if (length(genera) == 0) {
-  stop("A coluna de generos esta vazia: ", genus_col, call. = FALSE)
+  stop("The genus column is empty: ", genus_col, call. = FALSE)
 }
 
 query_terms <- sprintf('%s("%s")', search_field, escape_scopus_string(genera))
@@ -152,9 +152,9 @@ dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
 rscopus::set_api_key(api_key)
 
-message("Arquivo de entrada: ", input_file)
-message("Coluna de generos: ", genus_col)
-message("Generos na consulta: ", length(genera))
+message("Input file: ", input_file)
+message("Genus column: ", genus_col)
+message("Genera in query: ", length(genera))
 message("Campo pesquisado: ", search_field)
 message("Tamanho da query: ", nchar(query), " caracteres")
 message("Iniciando busca na Scopus...")
@@ -234,9 +234,9 @@ saveRDS(
 )
 
 message("Busca concluida.")
-message("Registros brutos: ", nrow(raw_df))
-message("Registros apos deduplicacao: ", nrow(articles_df))
-message("CSV deduplicado: ", csv_file)
+message("Raw records: ", nrow(raw_df))
+message("Records after deduplication: ", nrow(articles_df))
+message("Deduplicated CSV: ", csv_file)
 message("CSV bruto: ", raw_csv_file)
 message("RDS completo: ", rds_file)
 message("Query salva em: ", query_file)

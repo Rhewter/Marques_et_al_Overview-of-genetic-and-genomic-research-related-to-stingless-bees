@@ -2,7 +2,7 @@
 
 # Adiciona titulos e resumos do OpenAlex ao CSV baixado da Scopus.
 # O OpenAlex representa resumos como "abstract_inverted_index"; este script
-# reconstrói o texto e preserva os metadados originais da Scopus.
+# reconstructs abstract text and preserves the original Scopus metadata.
 
 required_packages <- c("httr2", "jsonlite")
 missing_packages <- required_packages[!vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)]
@@ -60,14 +60,14 @@ args <- parse_args(commandArgs(trailingOnly = TRUE))
 if (isTRUE(args$help) || isTRUE(args$h)) {
   cat(
     paste0(
-      "Uso:\n",
-      "  Rscript scripts/add_openalex_abstracts.R --input=ARQUIVO_SCOPUS.csv [opcoes]\n\n",
-      "Opcoes:\n",
-      "  --input=ARQUIVO       CSV deduplicado gerado pelo script da Scopus.\n",
-      "  --output=ARQUIVO      CSV de saida. Padrao: *_with_openalex_abstracts.csv\n",
-      "  --batch-size=N        DOIs por chamada ao OpenAlex. Padrao: 25\n",
-      "  --max-dois=N          Consulta apenas os N primeiros DOIs, util para teste.\n",
-      "  --mailto=EMAIL        Email para uso educado da API OpenAlex.\n"
+      "Usage:\n",
+      "  Rscript scripts/add_openalex_abstracts.R --input=SCOPUS_FILE.csv [options]\n\n",
+      "Options:\n",
+      "  --input=FILE       Deduplicated CSV produced by the Scopus script.\n",
+      "  --output=FILE      Output CSV. Default: *_with_openalex_abstracts.csv\n",
+      "  --batch-size=N        DOIs per OpenAlex request. Default: 25\n",
+      "  --max-dois=N          Query only the first N DOIs; useful for testing.\n",
+      "  --mailto=EMAIL        Contact email for polite OpenAlex API use.\n"
     )
   )
   quit(status = 0)
@@ -85,7 +85,7 @@ if (is.null(input_file)) {
 
 if (is.null(input_file) || !file.exists(input_file)) {
   stop(
-    "Informe um CSV valido com --input=ARQUIVO. ",
+    "Provide a valid CSV with --input=FILE. ",
     "Exemplo: --input=data/scopus/scopus_meliponini_articles_20260501_165336.csv",
     call. = FALSE
   )
@@ -93,14 +93,14 @@ if (is.null(input_file) || !file.exists(input_file)) {
 
 batch_size <- as.integer(args[["batch-size"]] %||% 25L)
 if (is.na(batch_size) || batch_size < 1) {
-  stop("--batch-size precisa ser um inteiro positivo.", call. = FALSE)
+  stop("--batch-size must be a positive integer.", call. = FALSE)
 }
 
 max_dois <- args[["max-dois"]]
 if (!is.null(max_dois)) {
   max_dois <- as.integer(max_dois)
   if (is.na(max_dois) || max_dois < 1) {
-    stop("--max-dois precisa ser um inteiro positivo.", call. = FALSE)
+    stop("--max-dois must be a positive integer.", call. = FALSE)
   }
 }
 
@@ -173,11 +173,11 @@ fetch_openalex_batch <- function(dois, mailto = NULL) {
 scopus_df <- utils::read.csv(input_file, check.names = FALSE, stringsAsFactors = FALSE)
 
 if (!"prism:doi" %in% names(scopus_df)) {
-  stop("O CSV de entrada nao contem a coluna prism:doi.", call. = FALSE)
+  stop("The input CSV does not contain the column prism:doi.", call. = FALSE)
 }
 
 if (!"dc:title" %in% names(scopus_df)) {
-  stop("O CSV de entrada nao contem a coluna dc:title.", call. = FALSE)
+  stop("The input CSV does not contain the column dc:title.", call. = FALSE)
 }
 
 scopus_df$doi_norm <- normalize_doi(scopus_df[["prism:doi"]])
@@ -186,15 +186,15 @@ if (!is.null(max_dois)) {
   unique_dois <- head(unique_dois, max_dois)
 }
 
-message("Arquivo de entrada: ", input_file)
-message("Registros Scopus: ", nrow(scopus_df))
-message("DOIs unicos para consulta no OpenAlex: ", length(unique_dois))
+message("Input file: ", input_file)
+message("Scopus records: ", nrow(scopus_df))
+message("Unique DOIs to query in OpenAlex: ", length(unique_dois))
 
 batches <- split(unique_dois, ceiling(seq_along(unique_dois) / batch_size))
 openalex_rows <- vector("list", length(batches))
 
 for (i in seq_along(batches)) {
-  message("OpenAlex lote ", i, "/", length(batches), " (", length(batches[[i]]), " DOIs)")
+  message("OpenAlex batch ", i, "/", length(batches), " (", length(batches[[i]]), " DOIs)")
   openalex_rows[[i]] <- fetch_openalex_batch(batches[[i]], mailto = mailto)
   Sys.sleep(0.11)
 }
@@ -237,6 +237,6 @@ merged <- merged[, c(preferred_cols, remaining_cols), drop = FALSE]
 utils::write.csv(merged, output_file, row.names = FALSE, fileEncoding = "UTF-8")
 
 message("Busca concluida.")
-message("Registros com DOI encontrados no OpenAlex: ", sum(!is.na(merged$openalex_title)))
-message("Registros com resumo OpenAlex: ", sum(!is.na(merged$abstract) & nzchar(merged$abstract)))
-message("CSV com titulos e resumos: ", output_file)
+message("Records with DOIs found in OpenAlex: ", sum(!is.na(merged$openalex_title)))
+message("Records with an OpenAlex abstract: ", sum(!is.na(merged$abstract) & nzchar(merged$abstract)))
+message("CSV with titles and abstracts: ", output_file)
